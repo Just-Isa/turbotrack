@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.neighborhoodtalk"
+    namespace = "com.kidrich.turbotrack"
     compileSdk = 34
 
     buildFeatures{
@@ -12,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.neighborhoodtalk"
+        applicationId = "com.kidrich.turbotrack"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

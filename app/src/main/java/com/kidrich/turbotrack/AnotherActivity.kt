@@ -1,10 +1,10 @@
-package com.example.turbotrack
+package com.kidrich.turbotrack
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.turbotrack.databinding.ActivityAnotherBinding
+import com.kidrich.turbotrack.databinding.ActivityAnotherBinding
 
 class AnotherActivity: AppCompatActivity() {
 

@@ -13,5 +13,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Neighborhood Talk"
+rootProject.name = "com.kidrich.turbotrack"
 include(":app")
