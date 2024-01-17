@@ -1,14 +1,18 @@
 package com.kidrich.turbotrack
 
-import android.content.Context
-import android.database.Observable
 import android.os.Bundle
 import android.util.Log.d
-import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.kidrich.turbotrack.databinding.ActivityMainscreenBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
+import java.util.Date
 import kotlin.properties.Delegates
 
 class MainScreenActivity: AppCompatActivity() {
@@ -33,26 +37,54 @@ class MainScreenActivity: AppCompatActivity() {
         binding = ActivityMainscreenBinding.inflate(layoutInflater);
         setContentView(binding.root);
 
-        val storage = getSharedPreferences("storage", Context.MODE_PRIVATE);
+        val db  = MealDatabase.getInstance(applicationContext);
+
+        val viewModel by viewModels<MealViewModel>(
+            factoryProducer = {
+                object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                        return MealViewModel(db.dao) as T
+                    }
+                }
+            }
+        )
 
         binding.addMealButton.setOnClickListener {
             d("MainScreen", "Add Meal");
             binding.texttest.text = "mEALung";
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    withContext(Dispatchers.IO) {
+                        viewModel.onEvent(MealEvent.SetCalories(200))
+                        viewModel.onEvent(MealEvent.SetTimestamp(Date()))
+                        viewModel.onEvent(MealEvent.SetIsSnack(false))
+                        viewModel.onEvent(MealEvent.SaveMeal)
+                    }
+                } catch(e: Exception) {
+                    d("savestufff", e.toString())
+                }
+            }
 
         }
 
         binding.addSnackButton.setOnClickListener {
             d("MainScreen", "Add Snack");
-            binding.texttest.text = "sNACCung";
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    viewModel.onEvent(MealEvent.DateType(DateType.TODAY))
+                    viewModel.onEvent(MealEvent.SortType(SortType.ALL))
+                    viewModel.state.collect { state ->
+                        val result = state.meals
+                        binding.texttest.text = result.toString()
+                    }
+                } catch(e: Exception) {
+                    d("savestufff", e.toString())
+                }
+            }
+
         }
 
         binding.entercalories.setOnClickListener {
-            if (binding.hiddenCalorieInput.visibility == View.VISIBLE) {
-                totalCal = totalCal + binding.hiddenCalorieInput.text.toString().toInt();
-                binding.hiddenCalorieInput.visibility = View.GONE;
-            } else {
-                binding.hiddenCalorieInput.visibility = View.VISIBLE;
-            }
         }
     }
 }
