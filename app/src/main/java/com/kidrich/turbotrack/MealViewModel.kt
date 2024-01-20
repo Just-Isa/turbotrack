@@ -11,28 +11,28 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Date
 
 class MealViewModel(
-    private val dao: MealDao
+    private val mealDao: MealDao,
+    private val ingredientDao: IngredientDao,
 ): ViewModel(){
     private val _sortType = MutableStateFlow(SortType.ALL)
-    private val _dateType = MutableStateFlow(DateType.TODAY)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _meals = _sortType
-    .flatMapLatest { sortType ->
-        when (sortType) {
-            SortType.ALL -> dao.getAllMeals()
-            SortType.SNACK -> dao.getSpecificSnacks()
-            SortType.MEAL -> dao.getSpecificMeals()
-        }
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+        .flatMapLatest { sortType ->
+            when (sortType) {
+                SortType.ALL -> mealDao.getMealsWithIngredients()
+                SortType.SNACK -> mealDao.getMealsWithIngredients()
+                SortType.MEAL -> mealDao.getMealsWithIngredients()
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
+    @OptIn(ExperimentalCoroutinesApi::class)
 
 
     private val _state = MutableStateFlow(MealState())
-    val state = combine(_state, _sortType, _meals) { state, sortType, meals  ->
+    val state = combine(_state, _sortType, _meals ) { state, sortType, meals  ->
         state.copy(
             meals = meals,
             sortType = sortType,
@@ -44,7 +44,7 @@ class MealViewModel(
         when(event) {
             is MealEvent.DeleteMeal -> {
                 viewModelScope.launch {
-                    dao.deleteMeal(event.meal)
+                    mealDao.deleteMeal(event.meal)
                 }
             }
             MealEvent.HideDialog -> {
@@ -53,34 +53,7 @@ class MealViewModel(
                 ) }
             }
             MealEvent.SaveMeal -> {
-
-                val calories = _state.value.calories
-                val isSnack = _state.value.isSnack
-                val timestamp = _state.value.timestamp
-                d("test","war hier")
-                d("test2", calories.toString());
-                if(calories == 0 ) return;
-
-                val meal = Meal(
-                    calories = calories,
-                    isSnack = isSnack,
-                    timestamp = timestamp
-                )
-
-                dao.upsertMeal(meal)
-                d("test","war hier")
-
-                _state.update { it.copy(
-                    calories = 0,
-                    isSnack = false,
-                    isAddingMeal = false,
-                    timestamp = Date()
-                ) }
-            }
-            is MealEvent.SetCalories -> {
-                _state.update { it.copy(
-                    calories = event.calories
-                ) }
+                // TODO: Maybe implement later depending on need
             }
             is MealEvent.SetTimestamp-> {
                 _state.update { it.copy(
@@ -100,8 +73,30 @@ class MealViewModel(
             is MealEvent.SortType -> {
                 _sortType.value = event.sortType
             }
-            is MealEvent.DateType -> {
-                _dateType.value = event.dateType
+            is MealEvent.InsertMealWithIngredients -> {
+
+                // UPSERT NEW MEAL
+                val newMeal: Meal  = Meal(
+                    isSnack = event.meal.isSnack,
+                    timestamp = event.meal.timestamp,
+                    mealId = event.meal.mealId
+                )
+
+                // UPSERT INGREDIENTS
+                val mealId: Long = mealDao.upsertMeal(newMeal)
+                d("MealViewModel", event.ingredients.toString())
+                val ingredients: ArrayList<Ingredient> = arrayListOf()
+                event.ingredients.forEach { ingredient: Ingredient ->
+                    ingredients.add(Ingredient(
+                        mealId = mealId,
+                        calories = ingredient.calories,
+                        name = ingredient.name
+                    ))
+                }
+                ingredientDao.upsertIngredients(ingredients)
+            }
+
+            is MealEvent.SaveOneMeal -> {
             }
         }
     }

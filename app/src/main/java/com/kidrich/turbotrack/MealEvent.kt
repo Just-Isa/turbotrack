@@ -1,15 +1,23 @@
 package com.kidrich.turbotrack
 
-import java.util.Date
-
 sealed interface MealEvent {
     object SaveMeal: MealEvent
-    data class SetTimestamp(val timestamp: Date): MealEvent
-    data class SetCalories(val calories: Int): MealEvent
+    data class SaveOneMeal(val Meal: Meal): MealEvent
+    data class InsertMealWithIngredients(val meal: Meal, val ingredients: List<Ingredient>): MealEvent
+    data class SetTimestamp(val timestamp: String): MealEvent
     data class SetIsSnack(val isSnack: Boolean): MealEvent
     object ShowDialog: MealEvent
     object HideDialog: MealEvent
     data class SortType(val sortType: com.kidrich.turbotrack.SortType): MealEvent
-    data class DateType(val dateType: com.kidrich.turbotrack.DateType): MealEvent
     data class DeleteMeal(val meal: Meal): MealEvent
+}
+
+sealed interface IngredientEvent {
+    object SaveIngredient: IngredientEvent
+
+    data class SaveIngredients(val ingredients: List<Ingredient>): IngredientEvent
+    data class DeleteIngredient(val ingredient: Ingredient): IngredientEvent
+    data class setName(val name: String): IngredientEvent
+    data class setCalories(val calories: Int): IngredientEvent
+    data class setMealId(val mealId: Long): IngredientEvent
 }

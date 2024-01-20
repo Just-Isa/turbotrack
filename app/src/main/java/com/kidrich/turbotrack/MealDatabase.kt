@@ -5,12 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 @Database(
-    entities = [Meal::class],
-    version = 1,
+    entities = [Meal::class, Ingredient::class],
+    version = 12,
     exportSchema = false
 )
 abstract class MealDatabase: RoomDatabase() {
-    abstract val dao: MealDao
+    abstract val mealDao: MealDao
+    abstract val ingredientDao: IngredientDao
 
     companion object {
 

@@ -1,20 +1,20 @@
 package com.kidrich.turbotrack
 
+import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import android.Manifest
 import android.graphics.BitmapFactory
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log.d
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.kidrich.turbotrack.databinding.ActivityMainBinding
 import java.io.File
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setTitle(text)
-            .setPositiveButton("Ok") {_, _ ->
+            .setPositiveButton("Alrighty") {_, _ ->
                 //pass
             }.create().show()
     }

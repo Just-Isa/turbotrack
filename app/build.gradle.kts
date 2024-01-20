@@ -36,7 +36,6 @@ android {
         jvmTarget = "1.8"
     }
 }
-
 dependencies {
 
     implementation("androidx.core:core-ktx:1.10.1")
@@ -52,4 +51,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
     implementation("androidx.fragment:fragment-ktx:1.3.0")
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

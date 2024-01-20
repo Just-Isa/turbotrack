@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.turbotrack" parent="Base.Theme.turbotrack" />
+
+    <style name="WindowAnimationStyle">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+
 </resources>
