@@ -103,7 +103,6 @@ class AddMealActivity: AppCompatActivity() {
         }
         ingredientList.add(ingredientView)
         binding.layoutList.addView(ingredientView)
-
     }
 
     private fun removeView(view: View) {

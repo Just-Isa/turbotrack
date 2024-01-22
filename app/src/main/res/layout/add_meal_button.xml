@@ -13,18 +13,21 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/meal_barchat_name"
-            android:layout_width="243dp"
+            android:layout_width="159dp"
             android:layout_height="wrap_content"
             android:text="test"
-            android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:gravity="left"
+            android:textAlignment="gravity"
+            android:textColor="@color/white"
+            android:layout_marginLeft="10dp"/>
 
         <TextView
             android:id="@+id/meal_barchat_calories"
-            android:layout_width="151dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:text="test"
-            android:textAlignment="center"
+            android:gravity="right"
+            android:textAlignment="gravity"
             android:textColor="@color/white" />
     </LinearLayout>
 

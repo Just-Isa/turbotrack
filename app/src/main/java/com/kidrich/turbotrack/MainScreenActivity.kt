@@ -58,12 +58,10 @@ class MainScreenActivity: AppCompatActivity() {
         // Setting click listeners for the buttons
         setClickListeners(viewModelMeal, viewModelIngredient)
 
-        if (savedInstanceState == null) {
-            val fragment = VerticalBarChartFragment()
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .commit()
-        }
+        val fragment = VerticalBarChartFragment()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
     }
 
     private fun setClickListeners(viewModelMeal: MealViewModel,
@@ -87,7 +85,4 @@ class MainScreenActivity: AppCompatActivity() {
             }
         }
     }
-
-
-
 }
