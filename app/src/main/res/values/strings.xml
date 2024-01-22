@@ -3,4 +3,5 @@
     <string name="add_ingredient_name_hint">Name</string>
     <string name="add_ingredient_calories_hint">Calories</string>
     <string name="add_meal_title">Meal Name</string>
+    <string name="meal_ingredient_detail_button_title">Ingredients</string>
 </resources>

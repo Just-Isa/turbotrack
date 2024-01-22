@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -64,7 +65,7 @@ class VerticalBarChartFragment : Fragment() {
 
         configureChartAppearance()
         if (activity != null) {
-            prepareChartData(viewModelMeal, activity)
+            prepareChartData(viewModelMeal, activity, inflater)
         }
 
 
@@ -104,7 +105,7 @@ class VerticalBarChartFragment : Fragment() {
     }
 
 
-    private fun prepareChartData(viewModelMeal: MealViewModel, activity: MainScreenActivity) {
+    private fun prepareChartData(viewModelMeal: MealViewModel, activity: MainScreenActivity, inflater: LayoutInflater) {
         lifecycleScope.launch { // assuming you're inside an Activity or Fragment
             viewModelMeal.state.collect { mealState ->
 
@@ -131,7 +132,7 @@ class VerticalBarChartFragment : Fragment() {
 
                     values.add(BarEntry(i.toFloat(), totalCalsForDay.toFloat()))
 
-                    chart?.setOnChartValueSelectedListener(BarChartOnChartValueSelectedListener(mealsMappedToDays, activity, formattedDates))
+                    chart?.setOnChartValueSelectedListener(BarChartOnChartValueSelectedListener(mealsMappedToDays, activity, formattedDates, inflater))
                 }
                 updateChart(values)
             }
@@ -180,11 +181,13 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     private var mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>> = arrayListOf()
     private lateinit var activity: MainScreenActivity
     private lateinit var formattedDates: List<String>
+    private lateinit var inflater: LayoutInflater
 
-    constructor(mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>>, activity: MainScreenActivity, formattedDates: List<String>) {
+    constructor(mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>>, activity: MainScreenActivity, formattedDates: List<String>, inflater: LayoutInflater) {
         this.formattedDates = formattedDates
         this.mealsMappedToDays = mealsMappedToDays
         this.activity = activity
+        this.inflater = inflater
     }
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
@@ -192,10 +195,26 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
 
         mealsMappedToDays.filter { mealsMappedToDays -> mealsMappedToDays.first == formattedDates[e?.x?.toInt()!!]}.forEach { pair ->
             val button = AppCompatButton(activity)
-            button.text = pair.first + " - " + pair.second.meal.name
+
+            val mealDetailButton = inflater.inflate(R.layout.add_meal_button, null, false)
+
+            val showIngredients = mealDetailButton.findViewById<AppCompatButton>(R.id.meal_ingredient_detail)
+            val deleteMeal = mealDetailButton.findViewById<AppCompatButton>(R.id.meal_ingredient_detail_remove)
+            val nameContainer = mealDetailButton.findViewById<AppCompatTextView>(R.id.meal_barchat_name)
+            val caloryContainer = mealDetailButton.findViewById<AppCompatTextView>(R.id.meal_barchat_calories)
+
+            showIngredients.setOnClickListener {
+                onDetailButtonClicked(pair.second.ingredients)
+            }
+            deleteMeal.setOnClickListener {
+                onRemoveButtonClicked(pair.second.meal)
+            }
+
+            nameContainer.text = pair.second.meal.name
+            caloryContainer.text = pair.second.ingredients.sumOf { ingredient -> ingredient.calories }.toString() + " cal"
+
 
             button.setOnClickListener {
-                onButtonClicked(pair.second.ingredients)
             }
 
             button.layoutParams = LinearLayout.LayoutParams(
@@ -203,13 +222,17 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
 
-            informationLayout.addView(button)
+            informationLayout.addView(mealDetailButton)
         }
     }
 
-    private fun onButtonClicked(ingredients: List<Ingredient>) {
+    private fun onDetailButtonClicked(ingredients: List<Ingredient>) {
         Log.d("test", ingredients.toString())
         // Add your logic for handling button click with specific ingredients
+    }
+
+    private fun onRemoveButtonClicked(meal: Meal) {
+        Log.d("test", meal.toString())
     }
 
     override fun onNothingSelected() {

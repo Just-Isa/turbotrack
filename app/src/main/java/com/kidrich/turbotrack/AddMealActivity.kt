@@ -2,7 +2,6 @@ package com.kidrich.turbotrack
 
 import android.app.AlertDialog
 import android.icu.text.SimpleDateFormat
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -72,7 +71,6 @@ class AddMealActivity: AppCompatActivity() {
                         )
                     }
                 }
-                Log.d("warum2", ingredientsToSubmit.toString())
 
 
                 if (ingredientsToSubmit.size == ingredientList.size) {
@@ -94,9 +92,6 @@ class AddMealActivity: AppCompatActivity() {
 
         binding.mealIngredientCloseButton.setOnClickListener {
             finish();
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            }
         }
     }
 

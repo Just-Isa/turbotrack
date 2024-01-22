@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/meal_barchat_name"
+            android:layout_width="243dp"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/meal_barchat_calories"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:text="test"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/textlines">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/meal_ingredient_detail"
+            android:layout_width="300dp"
+            android:layout_height="42dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/add_ingredient_button"
+            android:text="@string/meal_ingredient_detail_button_title"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/meal_ingredient_detail_remove"
+            android:layout_width="68dp"
+            android:layout_height="44dp"
+            android:background="@drawable/add_ingredient_button"
+            android:drawableEnd="@android:drawable/ic_input_delete"
+            android:paddingEnd="20dp"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </LinearLayout>
+</LinearLayout>
