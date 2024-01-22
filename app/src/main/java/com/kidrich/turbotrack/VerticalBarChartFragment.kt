@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,10 +19,14 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -29,6 +35,7 @@ import java.time.format.DateTimeFormatter
 class VerticalBarChartFragment : Fragment() {
 
     private var chart: BarChart? = null
+    private var mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -53,10 +60,13 @@ class VerticalBarChartFragment : Fragment() {
         )
 
         chart = view.findViewById(R.id.fragment_verticalbarchart_chart)
+        val activity = activity as? MainScreenActivity
 
         configureChartAppearance()
+        if (activity != null) {
+            prepareChartData(viewModelMeal, activity)
+        }
 
-        prepareChartData(viewModelMeal)
 
         return view
     }
@@ -93,7 +103,8 @@ class VerticalBarChartFragment : Fragment() {
         axisRight.setDrawLabels(false);
     }
 
-    private fun prepareChartData(viewModelMeal: MealViewModel) {
+
+    private fun prepareChartData(viewModelMeal: MealViewModel, activity: MainScreenActivity) {
         lifecycleScope.launch { // assuming you're inside an Activity or Fragment
             viewModelMeal.state.collect { mealState ->
 
@@ -103,20 +114,26 @@ class VerticalBarChartFragment : Fragment() {
                 val formattedDates = datesOfWeek.map { it.format(DateTimeFormatter.ISO_DATE) }
 
                 val values = arrayListOf<BarEntry>()
+                mealsMappedToDays = arrayListOf()
 
                 for (i in 0 until 7) {
                     // FILTER MEALS TO TODAY
                     val relevantMeals = mealState.meals.filter { meals -> meals.meal.timestamp == formattedDates[i] }
+                    Log.d("relevantMeals", relevantMeals.toString())
                     if (relevantMeals.isEmpty()) {
                         values.add(BarEntry(i.toFloat(), 0f))
                         continue
                     }
                     var totalCalsForDay = 0
                     relevantMeals.forEach { mealWithIngredients: MealWithIngredients -> totalCalsForDay += mealWithIngredients.ingredients.sumOf { ingredients -> ingredients.calories } }
+                    relevantMeals.forEach { mealWithIngredients: MealWithIngredients -> mealsMappedToDays.add(Pair(formattedDates[i], mealWithIngredients))}
+                    Log.d("mealsMappedToDays", mealsMappedToDays.toString())
+
                     values.add(BarEntry(i.toFloat(), totalCalsForDay.toFloat()))
+
+                    chart?.setOnChartValueSelectedListener(BarChartOnChartValueSelectedListener(mealsMappedToDays, activity, formattedDates))
                 }
                 updateChart(values)
-
             }
         }
     }
@@ -125,6 +142,7 @@ class VerticalBarChartFragment : Fragment() {
         Log.d("chart", values.toString())
 
         val set1: BarDataSet = BarDataSet(values, SET_LABEL)
+        set1.color = ColorTemplate.rgb("#98FF98")
         val dataSets: ArrayList<IBarDataSet> = arrayListOf()
         dataSets.add(set1)
         val data: BarData = BarData(dataSets)
@@ -137,6 +155,7 @@ class VerticalBarChartFragment : Fragment() {
         chart?.legend?.textColor = ColorTemplate.rgb(("#ffffff"))
         chart!!.data = data
         chart!!.barData.setValueTextColor(ColorTemplate.rgb("#000000"))
+        chart?.barData?.setValueFormatter(CaloryValueFormatter())
         chart!!.invalidate()
     }
     companion object {
@@ -147,4 +166,54 @@ class VerticalBarChartFragment : Fragment() {
         private val DAYS = arrayOf("MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN")
     }
 
+}
+
+public class CaloryValueFormatter : ValueFormatter() {
+    private var mFormat: DecimalFormat =  DecimalFormat("###,###,##0")
+
+    override fun getFormattedValue(value: Float): String {
+        return mFormat.format(value)
+    }
+}
+
+private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListener  {
+    private var mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>> = arrayListOf()
+    private lateinit var activity: MainScreenActivity
+    private lateinit var formattedDates: List<String>
+
+    constructor(mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>>, activity: MainScreenActivity, formattedDates: List<String>) {
+        this.formattedDates = formattedDates
+        this.mealsMappedToDays = mealsMappedToDays
+        this.activity = activity
+    }
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
+        informationLayout.removeAllViews()
+
+        mealsMappedToDays.filter { mealsMappedToDays -> mealsMappedToDays.first == formattedDates[e?.x?.toInt()!!]}.forEach { pair ->
+            val button = AppCompatButton(activity)
+            button.text = pair.first + " - " + pair.second.meal.name
+
+            button.setOnClickListener {
+                onButtonClicked(pair.second.ingredients)
+            }
+
+            button.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+
+            informationLayout.addView(button)
+        }
+    }
+
+    private fun onButtonClicked(ingredients: List<Ingredient>) {
+        Log.d("test", ingredients.toString())
+        // Add your logic for handling button click with specific ingredients
+    }
+
+    override fun onNothingSelected() {
+        val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
+        informationLayout.removeAllViews()
+    }
 }

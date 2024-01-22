@@ -6,42 +6,32 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <EditText
-        android:id="@+id/meal_ingredient_name"
-        android:layout_width="324dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:ems="10"
-        android:hint="@string/add_ingredient_name_hint"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/meal_ingredient_calories"
-        android:layout_width="321dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="108dp"
-        android:ems="10"
-        android:hint="@string/add_ingredient_calories_hint"
-        android:inputType="number"
+        android:id="@+id/meal_add_meal_name"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/textlines"
+        android:hint="@string/add_meal_title"
+        android:inputType="text"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp"
         android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColorHint="#363636"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/meal_ingredient_add_button"
-
-        android:layout_width="277dp"
-        android:layout_height="61dp"
-
+        android:id="@+id/meal_add_ingredient_button"
+        android:layout_width="202dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/add_ingredient_button"
+        android:drawableLeft="@android:drawable/ic_input_add"
         android:drawableRight="@android:drawable/ic_input_add"
         android:gravity="center"
         android:paddingLeft="10dp"
@@ -50,25 +40,41 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:text="Add Ingredient"
+        android:text="Ingredient"
         android:textColor="#FFFFFF"
         android:textColorHighlight="#000000"
         android:textColorLink="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textSize="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/meal_add_meal_name" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="410dp"
+        android:layout_height="456dp"
+        app:layout_constraintBottom_toTopOf="@+id/meal_ingredient_close_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.85" />
+        app:layout_constraintTop_toBottomOf="@+id/meal_add_ingredient_button"
+        app:layout_constraintVertical_bias="0.411">
+
+        <LinearLayout
+            android:id="@+id/layout_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/meal_ingredient_close_button"
+            app:layout_constraintTop_toBottomOf="@+id/meal_add_ingredient_button"
+            app:layout_constraintVertical_bias="0.022"
+            tools:layout_editor_absoluteX="0dp" />
+    </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/meal_ingredient_close_button"
-
-        android:layout_width="180dp"
-        android:layout_height="52dp"
-
-        android:background="@drawable/add_ingredient_button"
+        android:layout_width="165dp"
+        android:layout_height="53dp"
+        android:background="@drawable/add_snack_button"
         android:drawableRight="@android:drawable/ic_input_delete"
         android:gravity="center"
         android:paddingLeft="10dp"
@@ -82,10 +88,49 @@
         android:textColorHighlight="#000000"
         android:textColorLink="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/meal_submit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.735" />
+        app:layout_constraintVertical_bias="0.975" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/meal_submit_button"
+        android:layout_width="228dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/add_snack_button"
+        android:drawableRight="@android:drawable/ic_input_add"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="15dp"
+        android:shadowColor="#A8A8A8"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+        android:text="Add Meal"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#000000"
+        android:textColorLink="#000000"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switch_snack"
+        android:layout_width="98dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="Snack"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/meal_add_ingredient_button"
+        app:layout_constraintEnd_toEndOf="@+id/meal_add_meal_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

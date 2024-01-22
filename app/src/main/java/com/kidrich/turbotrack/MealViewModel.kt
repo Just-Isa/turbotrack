@@ -77,6 +77,7 @@ class MealViewModel(
 
                 // UPSERT NEW MEAL
                 val newMeal: Meal  = Meal(
+                    name = event.meal.name,
                     isSnack = event.meal.isSnack,
                     timestamp = event.meal.timestamp,
                     mealId = event.meal.mealId

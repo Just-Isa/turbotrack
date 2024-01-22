@@ -5,6 +5,9 @@ import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.EditText
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -13,13 +16,12 @@ import com.kidrich.turbotrack.databinding.ActivityMealFormBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Date
 
 class AddMealActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMealFormBinding
-
+    private var ingredientList : ArrayList<View> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,35 +40,56 @@ class AddMealActivity: AppCompatActivity() {
         binding = ActivityMealFormBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.mealAddIngredientButton.setOnClickListener {
+            addView()
+        }
+
+
         //get something from storage
-        binding.mealIngredientAddButton.setOnClickListener {
-            if(!binding.mealIngredientName.text.isNullOrBlank() &&
-                !binding.mealIngredientCalories.text.isNullOrBlank() ) {
+        binding.mealSubmitButton.setOnClickListener {
+            var ingredientsToSubmit: ArrayList<Ingredient> = arrayListOf()
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    try {
-                        withContext(Dispatchers.IO) {
-                            withContext(Dispatchers.IO) {
-                                var meal: Meal = Meal(
-                                    timestamp = getFormattedDay(),
-                                    isSnack = false
-                                )
+            if (binding.mealAddMealName.text.isNullOrBlank()) {
+                this.showAlertDialog("Please enter a Name for the Meal")
+            } else {
+                var meal: Meal = Meal(
+                    name = this.binding.mealAddMealName.text.toString(),
+                    timestamp = getFormattedDay(),
+                    isSnack = this.binding.switchSnack.isActivated
+                )
+                Log.d("warum1", ingredientList.toString())
+                ingredientList.forEach {
+                    val editName: EditText = it.findViewById(R.id.meal_ingredient_name)
+                    val editCalories: EditText = it.findViewById(R.id.meal_ingredient_calories)
 
-                                var ingredients = arrayListOf<Ingredient>(
-                                    Ingredient(name = binding.mealIngredientName.text.toString(), calories = binding.mealIngredientCalories.text.toString().toInt(), mealId = meal.mealId),
-                                )
-
-                                viewModelMeal.onEvent(MealEvent.InsertMealWithIngredients(meal, ingredients))
-                            }
-                        }
-                    } catch(e: Exception) {
-                        Log.d("Saving meal Error!", e.toString())
+                    if (!editName.text.isNullOrBlank() && !editCalories.text.isNullOrBlank()) {
+                        ingredientsToSubmit.add(
+                            Ingredient(
+                                name = editName.text.toString(),
+                                calories = editCalories.text.toString().toInt(),
+                                mealId = meal.mealId
+                            )
+                        )
                     }
                 }
-                finish();
-            } else {
-                this.showAlertDialog("Please make sure to fill in everything!")
+                Log.d("warum2", ingredientsToSubmit.toString())
+
+
+                if (ingredientsToSubmit.size == ingredientList.size) {
+                    CoroutineScope(Dispatchers.Main).launch {
+                        viewModelMeal.onEvent(
+                            MealEvent.InsertMealWithIngredients(
+                                meal,
+                                ingredientsToSubmit
+                            )
+                        )
+                        finish()
+                    }
+                } else {
+                    this.showAlertDialog("Please make sure to fill in everything!")
+                }
             }
+
         }
 
         binding.mealIngredientCloseButton.setOnClickListener {
@@ -77,6 +100,21 @@ class AddMealActivity: AppCompatActivity() {
         }
     }
 
+    private fun addView() {
+        val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
+
+        ingredientView.findViewById<ImageView>(R.id.meal_ingredient_remove).setOnClickListener {
+            removeView(ingredientView)
+        }
+        ingredientList.add(ingredientView)
+        binding.layoutList.addView(ingredientView)
+
+    }
+
+    private fun removeView(view: View) {
+        ingredientList.remove(view)
+        binding.layoutList.removeView(view)
+    }
 
     private fun showAlertDialog(text: String) {
         AlertDialog.Builder(this)

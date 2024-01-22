@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/textlines">
+
+    <EditText
+        android:id="@+id/meal_ingredient_name"
+        android:layout_width="156dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:hint="@string/add_ingredient_name_hint"
+        android:inputType="text"
+        android:textColor="@color/white"
+        android:textColorHint="#363636"
+        />
+
+
+    <EditText
+        android:id="@+id/meal_ingredient_calories"
+        android:layout_width="134dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:ems="10"
+        android:hint="@string/add_ingredient_calories_hint"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:textColorHint="#363636"
+
+        />
+
+    <ImageView
+        android:id="@+id/meal_ingredient_remove"
+        android:layout_width="77dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="4dp"
+        android:src="@android:drawable/ic_input_delete" />
+</LinearLayout>

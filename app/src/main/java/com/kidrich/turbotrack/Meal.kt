@@ -10,6 +10,7 @@ import androidx.room.Relation
 data class Meal (
     @PrimaryKey(autoGenerate = true)
     val mealId: Long = 0,
+    val name: String,
     val timestamp: String,
     val isSnack: Boolean
 )

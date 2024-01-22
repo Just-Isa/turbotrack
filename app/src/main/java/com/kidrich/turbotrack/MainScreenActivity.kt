@@ -12,15 +12,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
-import kotlin.properties.Delegates
 
 class MainScreenActivity: AppCompatActivity() {
 
 
-    private var totalCal: Int by Delegates.observable(0) { _, _, newValue ->
-        // Update the TextView when the observed value changes
-        binding.texttest.text = "Value: $newValue"
-    }
 
     private val REQUEST_CAMERA_PERMISSION = 1001;
     private val REQUEST_IMAGE_CAPTURE = 1
@@ -76,20 +71,8 @@ class MainScreenActivity: AppCompatActivity() {
     ) {
         binding.addMealButton.setOnClickListener {
             d("MainScreen", "Add Meal");
-            binding.texttest.text = "mEALung";
-
             startActivity(Intent(this, AddMealActivity::class.java))
 
-        }
-
-        binding.addSnackButton.setOnClickListener {
-            d("MainScreen", "Add Day and ingredient");
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-                } catch(e: Exception) {
-                    d("savestufff", e.toString())
-                }
-            }
         }
 
         binding.entercalories.setOnClickListener {
