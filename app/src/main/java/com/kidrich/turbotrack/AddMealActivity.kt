@@ -43,6 +43,10 @@ class AddMealActivity: AppCompatActivity() {
             addView()
         }
 
+        binding.mealScanIngredientButton.setOnClickListener {
+            scanIngerdient()
+        }
+
 
         //get something from storage
         binding.mealSubmitButton.setOnClickListener {
@@ -95,6 +99,10 @@ class AddMealActivity: AppCompatActivity() {
         }
     }
 
+    private fun scanIngerdient() {
+        Log.d("Scan igredient", "TODO")
+        TODO("SCAN INGREDIENT")
+    }
     private fun addView() {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
 
