@@ -25,7 +25,7 @@ class AddMealActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityMealFormBinding
     private var ingredientList : ArrayList<View> = arrayListOf()
-
+    private val REQUEST_CODE_IMAGE = 6969420
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -110,8 +110,9 @@ class AddMealActivity: AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     private fun scanIngredient() {
-        startActivity(Intent(this, CameraViewActivity::class.java))
+        startActivityForResult(Intent(this, CameraViewActivity::class.java), REQUEST_CODE_IMAGE)
         Log.d("Scan igredient", "TODO")
     }
 
@@ -139,8 +140,16 @@ class AddMealActivity: AppCompatActivity() {
             }.create().show()
     }
 
-
     fun getFormattedDay(): String{
         return SimpleDateFormat("yyyy-MM-dd").format(Date());
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK) {
+            val imagePath = data?.getStringExtra("imageFilePath")
+                Log.d("filepath", imagePath.toString())
+        }
     }
 }

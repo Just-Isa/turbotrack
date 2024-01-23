@@ -1,6 +1,7 @@
 package com.kidrich.turbotrack
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
@@ -102,6 +103,11 @@ class CameraViewActivity : AppCompatActivity() {
                             "Image saved at: " + file.path,
                             Toast.LENGTH_SHORT
                         ).show()
+
+                        val intent = Intent()
+                        intent.putExtra("imageFilePath", file.path)
+                        setResult(RESULT_OK, intent)
+                        finish()
                     }
                     startCamera(cameraFacing)
                 }
