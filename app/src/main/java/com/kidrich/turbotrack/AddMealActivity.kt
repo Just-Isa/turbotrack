@@ -88,7 +88,7 @@ class AddMealActivity: AppCompatActivity() {
                         finish()
                     }
                 } else {
-                    this.showAlertDialog("Please make sure to fill in everything!")
+                    this.showAlertDialog("Please make sure to fill in every Ingredient!")
                 }
             }
 
@@ -101,7 +101,7 @@ class AddMealActivity: AppCompatActivity() {
 
     private fun scanIngerdient() {
         Log.d("Scan igredient", "TODO")
-        TODO("SCAN INGREDIENT")
+        TODO("SCAN INGREDIENT, READ DATA FROM IMAGE, ADD VIEW FROM DATA")
     }
     private fun addView() {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
