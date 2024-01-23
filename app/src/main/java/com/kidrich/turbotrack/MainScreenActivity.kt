@@ -2,7 +2,6 @@ package com.kidrich.turbotrack
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log.d
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -68,7 +67,6 @@ class MainScreenActivity: AppCompatActivity() {
                                   viewModelIngredient: IngredientViewModel
     ) {
         binding.addMealButton.setOnClickListener {
-            d("MainScreen", "Add Meal");
             startActivity(Intent(this, AddMealActivity::class.java))
 
         }

@@ -1,7 +1,6 @@
 package com.kidrich.turbotrack
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kidrich.turbotrack.databinding.ActivityAnotherBinding
@@ -23,7 +22,7 @@ class AnotherActivity: AppCompatActivity() {
 
         //get something from storage
         binding.button2.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }

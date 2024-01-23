@@ -1,7 +1,6 @@
 package com.kidrich.turbotrack
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,7 +117,6 @@ class VerticalBarChartFragment : Fragment() {
                 for (i in 0 until 7) {
                     // FILTER MEALS TO TODAY
                     val relevantMeals = mealState.meals.filter { meals -> meals.meal.timestamp == formattedDates[i] }
-                    Log.d("relevantMeals", relevantMeals.toString())
                     if (relevantMeals.isEmpty()) {
                         values.add(BarEntry(i.toFloat(), 0f))
                         continue
@@ -197,7 +195,6 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
         informationLayout.removeAllViews()
-        Log.d("testAddMeal", mealsMappedToDays.toString())
         mealsMappedToDays.filter { mealsMappedToDays -> mealsMappedToDays.first == formattedDates[e?.x?.toInt()!!]}.forEach { pair ->
 
 
@@ -223,12 +220,10 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     }
 
     private fun onDetailButtonClicked(ingredients: List<Ingredient>) {
-        Log.d("test", ingredients.toString())
         // Add your logic for handling button click with specific ingredients
     }
 
     private fun onRemoveButtonClicked(meal: Meal, mealViewModel: MealViewModel, view: LinearLayout, component: View) {
-        Log.d("test", meal.toString())
         CoroutineScope(Dispatchers.Main).launch {
             view.removeView(component)
             mealViewModel.onEvent(MealEvent.DeleteMeal(meal))

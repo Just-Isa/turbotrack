@@ -2,6 +2,7 @@ package com.kidrich.turbotrack
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -11,7 +12,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +19,6 @@ import com.kidrich.turbotrack.databinding.ActivityMealFormBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.File
 import java.util.Date
 
 class AddMealActivity: AppCompatActivity() {
@@ -27,9 +26,6 @@ class AddMealActivity: AppCompatActivity() {
     private lateinit var binding: ActivityMealFormBinding
     private var ingredientList : ArrayList<View> = arrayListOf()
 
-    private val REQUEST_CAMERA_PERMISSION = 1001
-    private val REQUEST_IMAGE_CAPTURE = 1
-    private var photoFile: File? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -49,11 +45,17 @@ class AddMealActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         binding.mealAddIngredientButton.setOnClickListener {
-            addView()
+                addView()
         }
 
         binding.mealScanIngredientButton.setOnClickListener {
-            scanIngredient()
+
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                Log.d("cameratest", "Cant open cause no permission!!-")
+            } else {
+                scanIngredient()
+            }
+
         }
 
 
@@ -109,19 +111,10 @@ class AddMealActivity: AppCompatActivity() {
     }
 
     private fun scanIngredient() {
+        startActivity(Intent(this, CameraViewActivity::class.java))
         Log.d("Scan igredient", "TODO")
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                REQUEST_CAMERA_PERMISSION
-            )
-
-        } else {
-            Log.d("take piCtor", "take piCtor")
-        }
     }
+
     private fun addView() {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
 
