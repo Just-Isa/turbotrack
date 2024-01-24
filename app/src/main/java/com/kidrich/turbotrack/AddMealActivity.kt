@@ -1,5 +1,7 @@
 package com.kidrich.turbotrack
 
+import OpenFoodFactsApiTask
+import ProductResponse
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
@@ -15,13 +17,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.zxing.integration.android.IntentIntegrator
+import com.google.zxing.integration.android.IntentResult
 import com.kidrich.turbotrack.databinding.ActivityMealFormBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
 
-class AddMealActivity: AppCompatActivity() {
+class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
 
     private lateinit var binding: ActivityMealFormBinding
     private var ingredientList : ArrayList<View> = arrayListOf()
@@ -53,7 +57,7 @@ class AddMealActivity: AppCompatActivity() {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 Log.d("cameratest", "Cant open cause no permission!!-")
             } else {
-                scanIngredient()
+                scanCode()
             }
 
         }
@@ -108,11 +112,6 @@ class AddMealActivity: AppCompatActivity() {
         }
     }
 
-    @Deprecated("Deprecated in Java")
-    private fun scanIngredient() {
-        startActivityForResult(Intent(this, CameraViewActivity::class.java), REQUEST_CODE_IMAGE)
-        Log.d("Scan igredient", "TODO")
-    }
 
     private fun addView(kCal100: String?, genericName: String?) {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
@@ -155,13 +154,40 @@ class AddMealActivity: AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK) {
-            val kCal100: String? = data?.getStringExtra("kcalperhundred")
-            val genericName: String? = data?.getStringExtra("genericname")
-            if (!kCal100.isNullOrBlank()) {
-                addView(kCal100, genericName)
+        var result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        if (result != null) {
+            if (result.contents != null) {
+                val apiTask = OpenFoodFactsApiTask(this)
+                apiTask.execute(result.contents)
+            } else {
+                showAlertDialog("No qr code found!")
             }
         }
     }
+
+    private fun scanCode() {
+        val integrator: IntentIntegrator = IntentIntegrator(this);
+        integrator.setCaptureActivity(CaptureAct::class.java)
+        integrator.setOrientationLocked(true)
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES)
+        integrator.setPrompt("Scanning BarCode")
+        integrator.initiateScan()
+    }
+
+    override fun onApiTaskComplete(result: ProductResponse?) {
+        if (result != null) {
+            val kCal100 = result.product.nutriments.energyKcal100g.toString();
+            val genericName = result.product.product_name
+            if (!kCal100.isNullOrBlank() && !genericName.isNullOrBlank()) {
+                addView(kCal100, genericName)
+            }
+        } else {
+            showAlertDialog("Something went wrong with the api call!")
+        }
+    }
+
+    override fun onApiTaskError() {
+        Log.e("YourActivity", "API call failed")
+    }
+
 }

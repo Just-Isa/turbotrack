@@ -7,9 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kidrich.turbotrack.databinding.ActivityMainscreenBinding
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.io.File
 
 class MainScreenActivity: AppCompatActivity() {
@@ -68,19 +65,6 @@ class MainScreenActivity: AppCompatActivity() {
     ) {
         binding.addMealButton.setOnClickListener {
             startActivity(Intent(this, AddMealActivity::class.java))
-
-        }
-
-        binding.entercalories.setOnClickListener {
-
-            CoroutineScope(Dispatchers.Main).launch {
-                try {
-
-                } catch (e: Exception) {
-
-
-                }
-            }
         }
     }
 }

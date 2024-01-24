@@ -29,11 +29,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
         <activity
-            android:name=".MainActivity"
-            >
-        </activity>
-        <activity android:name=".AnotherActivity" />
-        <activity
             android:name=".MainScreenActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
@@ -44,10 +39,6 @@
         </activity>
         <activity
             android:name=".AddMealActivity"
-            android:windowSoftInputMode="adjustPan"
-            />
-        <activity
-            android:name=".CameraViewActivity"
             android:windowSoftInputMode="adjustPan"
             />
         <activity android:name=".CaptureAct"
