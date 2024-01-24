@@ -45,7 +45,7 @@ class AddMealActivity: AppCompatActivity() {
         setContentView(binding.root)
 
         binding.mealAddIngredientButton.setOnClickListener {
-                addView()
+                addView(null, null)
         }
 
         binding.mealScanIngredientButton.setOnClickListener {
@@ -58,8 +58,6 @@ class AddMealActivity: AppCompatActivity() {
 
         }
 
-
-        //get something from storage
         binding.mealSubmitButton.setOnClickListener {
             var ingredientsToSubmit: ArrayList<Ingredient> = arrayListOf()
 
@@ -75,18 +73,18 @@ class AddMealActivity: AppCompatActivity() {
                 ingredientList.forEach {
                     val editName: EditText = it.findViewById(R.id.meal_ingredient_name)
                     val editCalories: EditText = it.findViewById(R.id.meal_ingredient_calories)
+                    val editAmount: EditText = it.findViewById(R.id.meal_ingredient_calories_grams)
 
-                    if (!editName.text.isNullOrBlank() && !editCalories.text.isNullOrBlank()) {
+                    if (!editName.text.isNullOrBlank() && !editCalories.text.isNullOrBlank() && !editAmount.text.isNullOrBlank()) {
                         ingredientsToSubmit.add(
                             Ingredient(
                                 name = editName.text.toString(),
-                                calories = editCalories.text.toString().toInt(),
+                                calories = ((editCalories.text.toString().toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
                                 mealId = meal.mealId
                             )
                         )
                     }
                 }
-
 
                 if (ingredientsToSubmit.size == ingredientList.size) {
                     CoroutineScope(Dispatchers.Main).launch {
@@ -116,14 +114,25 @@ class AddMealActivity: AppCompatActivity() {
         Log.d("Scan igredient", "TODO")
     }
 
-    private fun addView() {
+    private fun addView(kCal100: String?, genericName: String?) {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
+        val caloriesPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_calories)
+
+        if (kCal100 != null) {
+            caloriesPerHundred.setText(kCal100)
+        }
+
+        if (genericName != null) {
+            ingredientView.findViewById<EditText>(R.id.meal_ingredient_name).setText(genericName)
+        }
 
         ingredientView.findViewById<ImageView>(R.id.meal_ingredient_remove).setOnClickListener {
             removeView(ingredientView)
         }
+
         ingredientList.add(ingredientView)
         binding.layoutList.addView(ingredientView)
+
     }
 
     private fun removeView(view: View) {
@@ -148,8 +157,11 @@ class AddMealActivity: AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_CODE_IMAGE && resultCode == RESULT_OK) {
-            val imagePath = data?.getStringExtra("imageFilePath")
-                Log.d("filepath", imagePath.toString())
+            val kCal100: String? = data?.getStringExtra("kcalperhundred")
+            val genericName: String? = data?.getStringExtra("genericname")
+            if (!kCal100.isNullOrBlank()) {
+                addView(kCal100, genericName)
+            }
         }
     }
 }
