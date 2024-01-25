@@ -45,5 +45,10 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity android:name=".IngredientDetailActivity"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
     </application>
 </manifest>

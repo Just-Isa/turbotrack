@@ -84,7 +84,8 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                             Ingredient(
                                 name = editName.text.toString(),
                                 calories = ((editCalories.text.toString().toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
-                                mealId = meal.mealId
+                                mealId = meal.mealId,
+                                grams = Integer.parseInt(editAmount.text.toString())
                             )
                         )
                     }

@@ -1,6 +1,7 @@
 package com.kidrich.turbotrack
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -221,7 +222,9 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     }
 
     private fun onDetailButtonClicked(ingredients: List<Ingredient>) {
-        // Add logic for handling button click with specific ingredients
+        val intent = Intent(activity, IngredientDetailActivity::class.java)
+        intent.putParcelableArrayListExtra("ingredients", ArrayList(ingredients))
+        activity.startActivity(intent)
     }
 
     private fun onRemoveButtonClicked(meal: Meal, mealViewModel: MealViewModel, view: LinearLayout, component: View) {

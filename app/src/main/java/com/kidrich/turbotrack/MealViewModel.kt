@@ -91,7 +91,8 @@ class MealViewModel(
                     ingredients.add(Ingredient(
                         mealId = mealId,
                         calories = ingredient.calories,
-                        name = ingredient.name
+                        name = ingredient.name,
+                        grams = ingredient.grams
                     ))
                 }
                 ingredientDao.upsertIngredients(ingredients)

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 @Database(
     entities = [Meal::class, Ingredient::class],
-    version = 13,
+    version = 14,
     exportSchema = false
 )
 abstract class MealDatabase: RoomDatabase() {

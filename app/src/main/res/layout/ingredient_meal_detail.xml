@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:paddingTop="5dp"
+    android:paddingBottom="10dp"
+    android:background="@drawable/textlines">
+
+
+    <TextView
+        android:id="@+id/meal_ingredient_detail_name"
+        android:layout_width="185dp"
+        android:layout_height="43dp"
+        android:background="@drawable/textlines_right"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/meal_ingredient_detail_calories"
+        android:layout_width="97dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="3dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toStartOf="@+id/meal_ingredient_detail_grams"
+        app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/meal_ingredient_detail_grams"
+        android:layout_width="97dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="3dp"
+        android:ems="10"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_calories"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
