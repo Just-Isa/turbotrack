@@ -1,6 +1,5 @@
 package com.kidrich.turbotrack
 
-import android.app.AlertDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -72,19 +71,19 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
             val entries: ArrayList<PieEntry> = arrayListOf()
 
 
-            if(totalFat.toFloat() > 0.1f) {
+            if(totalFat.toFloat() > 1f) {
                 entries.add(PieEntry(totalFat.toFloat(), "Fat", ))
             }
 
-            if(totalSugar.toFloat() > 0.1f) {
+            if(totalSugar.toFloat() > 1f) {
                 entries.add(PieEntry(totalSugar.toFloat(), "Sugar"))
             }
 
-            if(totalSalt.toFloat() > 0.1f) {
+            if(totalSalt.toFloat() > 1f) {
                 entries.add(PieEntry(totalSalt.toFloat(), "Salt"))
             }
 
-            if(totalProtein.toFloat() > 0.1f) {
+            if(totalProtein.toFloat() > 1f) {
                 entries.add(PieEntry(totalProtein.toFloat(), "Protein"))
             }
 
@@ -124,21 +123,12 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         Log.d("nutrition", e.toString())
         if (e is PieEntry) {
-            showAlertDialog(e.label + " - " + e.value + "g")
+            binding.mealNutritionalInfoSpecificText.text = e.label + " - " + e.value + "g"
         }
     }
 
-    private fun showAlertDialog(text: String) {
-        AlertDialog.Builder(this)
-            .setIcon(android.R.drawable.ic_dialog_alert)
-            .setTitle(text)
-            .setPositiveButton("Alrighty") {_, _ ->
-                //pass
-            }.create().show()
-    }
-
     override fun onNothingSelected() {
-        TODO("Not yet implemented")
+        binding.mealNutritionalInfoSpecificText.text = ""
     }
 
 }
