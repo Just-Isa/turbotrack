@@ -226,6 +226,13 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                     onNutritionalInfoButtonClickes(totalCaloryForMeal, pair.second.meal.name , pair.second.ingredients)
                 }
             } else {
+                showNutritionalInfo.setOnClickListener {
+                    AlertDialog.Builder(this.activity)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("No Nutritional Data present!")
+                        .setPositiveButton("Alrighty") {_, _ ->
+                        }.create().show()
+                }
                 showNutritionalInfo.setBackgroundColor(ColorTemplate.rgb("#363636"))
             }
 
