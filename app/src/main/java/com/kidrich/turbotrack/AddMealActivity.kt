@@ -177,9 +177,11 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         }
 
         if (nutriments != null) {
-            caloriesPerHundred.setText(nutriments.energyKcal100g.toString())
+            if (nutriments.energyKcal100g != 0.0) {
+                caloriesPerHundred.setText(nutriments.energyKcal100g.toString())
+                showAlertDialog("BarCode did not result in sufficient Data, please fill out.")
+            }
             ingredientInputList.add(Pair(ingredientView, nutriments));
-
             ingredientView.findViewById<ImageView>(R.id.meal_ingredient_remove).setOnClickListener {
                 removeView(Pair(ingredientView, nutriments))
             }

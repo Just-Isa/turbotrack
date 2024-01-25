@@ -216,9 +216,17 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                 onDetailButtonClicked(pair.second.ingredients)
             }
 
-            showNutritionalInfo.setOnClickListener {
-                onNutritionalInfoButtonClickes(totalCaloryForMeal, pair.second.meal.name , pair.second.ingredients)
+            if (
+                pair.second.ingredients.any { it.fat100g != 0.0 } ||
+                pair.second.ingredients.any { it.proteins100g != 0.0 } ||
+                pair.second.ingredients.any { it.salt100g != 0.0 } ||
+                pair.second.ingredients.any { it.sugars100g != 0.0 } )
+            {
+                showNutritionalInfo.setOnClickListener {
+                    onNutritionalInfoButtonClickes(totalCaloryForMeal, pair.second.meal.name , pair.second.ingredients)
+                }
             }
+
 
 
             deleteMeal.setOnClickListener {
