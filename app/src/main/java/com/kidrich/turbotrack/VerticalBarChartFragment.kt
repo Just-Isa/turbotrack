@@ -225,6 +225,8 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                 showNutritionalInfo.setOnClickListener {
                     onNutritionalInfoButtonClickes(totalCaloryForMeal, pair.second.meal.name , pair.second.ingredients)
                 }
+            } else {
+                showNutritionalInfo.setBackgroundColor(ColorTemplate.rgb("#363636"))
             }
 
 
