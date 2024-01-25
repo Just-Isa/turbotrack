@@ -203,22 +203,41 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
             val mealDetailButton = inflater.inflate(R.layout.add_meal_button, null, false)
 
             val showIngredients = mealDetailButton.findViewById<AppCompatButton>(R.id.meal_ingredient_detail)
+            val showNutritionalInfo = mealDetailButton.findViewById<AppCompatButton>(R.id.meal_nutritional_info)
+
             val deleteMeal = mealDetailButton.findViewById<AppCompatButton>(R.id.meal_ingredient_detail_remove)
+
             val nameContainer = mealDetailButton.findViewById<AppCompatTextView>(R.id.meal_barchat_name)
             val caloryContainer = mealDetailButton.findViewById<AppCompatTextView>(R.id.meal_barchat_calories)
+
+            val totalCaloryForMeal = pair.second.ingredients.sumOf { ingredient -> ingredient.calories };
 
             showIngredients.setOnClickListener {
                 onDetailButtonClicked(pair.second.ingredients)
             }
+
+            showNutritionalInfo.setOnClickListener {
+                onNutritionalInfoButtonClickes(totalCaloryForMeal, pair.second.meal.name , pair.second.ingredients)
+            }
+
+
             deleteMeal.setOnClickListener {
                 onRemoveButtonClicked(pair.second.meal, this.mealViewModel, informationLayout, mealDetailButton)
             }
 
             nameContainer.text = pair.second.meal.name
-            caloryContainer.text = pair.second.ingredients.sumOf { ingredient -> ingredient.calories }.toString() + " cal"
+            caloryContainer.text = totalCaloryForMeal.toString() + " cals"
 
             informationLayout.addView(mealDetailButton)
         }
+    }
+
+    private fun onNutritionalInfoButtonClickes(calories: Int, mealName: String, ingredients: List<Ingredient>) {
+        val intent = Intent(activity, MealNutritionActivity::class.java)
+        intent.putParcelableArrayListExtra("ingredients", ArrayList(ingredients))
+        intent.putExtra("mealCals", calories.toString())
+        intent.putExtra("mealName", mealName)
+        activity.startActivity(intent)
     }
 
     private fun onDetailButtonClicked(ingredients: List<Ingredient>) {

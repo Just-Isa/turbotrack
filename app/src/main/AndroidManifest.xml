@@ -50,5 +50,7 @@
             android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:windowSoftInputMode="stateAlwaysHidden"/>
+
+        <activity android:name=".MealNutritionActivity"></activity>
     </application>
 </manifest>

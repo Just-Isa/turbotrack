@@ -43,7 +43,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <!-- Container for the VerticalBarChartFragment -->
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="439dp"
