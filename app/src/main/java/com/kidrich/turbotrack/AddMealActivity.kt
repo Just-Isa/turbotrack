@@ -80,56 +80,56 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                     val editAmount: EditText = it.first.findViewById(R.id.meal_ingredient_calories_grams)
 
                     if (!editName.text.isNullOrBlank() && !editCalories.text.isNullOrBlank() && !editAmount.text.isNullOrBlank()) {
-                        if (it.second != null ) {
+                        if (it.second != null && it.second!!.energyKcal.toFloat() != 0.0f) {
                             ingredientsToSubmit.add(
                                 Ingredient(
                                     name = editName.text.toString(),
                                     calories = ((it.second!!.energyKcal.toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
                                     mealId = meal.mealId,
                                     grams = Integer.parseInt(editAmount.text.toString()),
-                                    alcohol = it.second!!.alcohol,
-                                    alcohol100g = it.second!!.alcohol100g,
-                                    alcoholServing = it.second!!.alcoholServing,
-                                    alcoholUnit = it.second!!.alcoholUnit,
-                                    alcoholValue = it.second!!.alcoholValue,
-                                    carbohydrates = it.second!!.carbohydrates,
-                                    carbohydrates100g = it.second!!.carbohydrates100g,
-                                    carbohydratesServing = it.second!!.carbohydratesServing,
-                                    carbohydratesUnit = it.second!!.carbohydratesUnit,
-                                    carbohydratesValue = it.second!!.carbohydratesValue,
-                                    energy = it.second!!.energy,
-                                    energy_100g = it.second!!.energy_100g,
-                                    energy_serving = it.second!!.energy_serving,
-                                    energyKcal = it.second!!.energyKcal,
-                                    energyKcal100g = it.second!!.energyKcal100g,
-                                    energyKcalServing = it.second!!.energyKcalServing,
-                                    energyKcalUnit = it.second!!.energyKcalUnit,
-                                    energyKcalValue = it.second!!.energyKcalValue,
-                                    energyKcalValueComputed = it.second!!.energyKcalValueComputed,
-                                    energyUnit = it.second!!.energyUnit,
-                                    energyValue = it.second!!.energyValue,
-                                    fat = it.second!!.fat,
-                                    fat100g = it.second!!.fat100g,
-                                    fatServing = it.second!!.fatServing,
-                                    fatUnit = it.second!!.fatUnit,
-                                    fatValue = it.second!!.fatValue,
-                                    proteins = it.second!!.proteins,
-                                    nutritionScoreFr = it.second!!.nutritionScoreFr,
-                                    nutritionScoreFr100g = it.second!!.nutritionScoreFr,
-                                    proteins100g = it.second!!.proteins100g,
-                                    proteinsServing = it.second!!.proteinsServing,
-                                    proteinsUnit = it.second!!.proteinsUnit,
-                                    proteinsValue = it.second!!.proteinsValue,
-                                    salt = it.second!!.salt,
-                                    salt100g = it.second!!.salt,
-                                    saltServing = it.second!!.saltServing,
-                                    saltUnit = it.second!!.saltUnit,
-                                    saltValue = it.second!!.saltValue,
-                                    sugars = it.second!!.sugars,
-                                    sugars100g = it.second!!.sugars100g,
-                                    sugarsServing = it.second!!.sugarsServing,
-                                    sugarsUnit = it.second!!.sugarsUnit,
-                                    sugarsValue = it.second!!.sugarsValue
+                                    alcohol = it.second?.alcohol,
+                                    alcohol100g = it.second?.alcohol100g,
+                                    alcoholServing = it.second?.alcoholServing,
+                                    alcoholUnit = it.second?.alcoholUnit,
+                                    alcoholValue = it.second?.alcoholValue,
+                                    carbohydrates = it.second?.carbohydrates,
+                                    carbohydrates100g = it.second?.carbohydrates100g,
+                                    carbohydratesServing = it.second?.carbohydratesServing,
+                                    carbohydratesUnit = it.second?.carbohydratesUnit,
+                                    carbohydratesValue = it.second?.carbohydratesValue,
+                                    energy = it.second?.energy,
+                                    energy_100g = it.second?.energy_100g,
+                                    energy_serving = it.second?.energy_serving,
+                                    energyKcal = it.second?.energyKcal,
+                                    energyKcal100g = it.second?.energyKcal100g,
+                                    energyKcalServing = it.second?.energyKcalServing,
+                                    energyKcalUnit = it.second?.energyKcalUnit,
+                                    energyKcalValue = it.second?.energyKcalValue,
+                                    energyKcalValueComputed = it.second?.energyKcalValueComputed,
+                                    energyUnit = it.second?.energyUnit,
+                                    energyValue = it.second?.energyValue,
+                                    fat = it.second?.fat,
+                                    fat100g = it.second?.fat100g,
+                                    fatServing = it.second?.fatServing,
+                                    fatUnit = it.second?.fatUnit,
+                                    fatValue = it.second?.fatValue,
+                                    proteins = it.second?.proteins,
+                                    nutritionScoreFr = it.second?.nutritionScoreFr,
+                                    nutritionScoreFr100g = it.second?.nutritionScoreFr,
+                                    proteins100g = it.second?.proteins100g,
+                                    proteinsServing = it.second?.proteinsServing,
+                                    proteinsUnit = it.second?.proteinsUnit,
+                                    proteinsValue = it.second?.proteinsValue,
+                                    salt = it.second?.salt,
+                                    salt100g = it.second?.salt,
+                                    saltServing = it.second?.saltServing,
+                                    saltUnit = it.second?.saltUnit,
+                                    saltValue = it.second?.saltValue,
+                                    sugars = it.second?.sugars,
+                                    sugars100g = it.second?.sugars100g,
+                                    sugarsServing = it.second?.sugarsServing,
+                                    sugarsUnit = it.second?.sugarsUnit,
+                                    sugarsValue = it.second?.sugarsValue
                                 )
                             )
                         } else {
@@ -171,7 +171,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
     private fun addView(nutriments: Nutriments?, genericName: String?) {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
         val caloriesPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_calories)
-
+        Log.d("hoden", nutriments.toString())
         if (genericName != null) {
             ingredientView.findViewById<EditText>(R.id.meal_ingredient_name).setText(genericName)
         }
@@ -179,6 +179,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         if (nutriments != null) {
             if (nutriments.energyKcal100g != 0.0) {
                 caloriesPerHundred.setText(nutriments.energyKcal100g.toString())
+            } else {
                 showAlertDialog("BarCode did not result in sufficient Data, please fill out.")
             }
             ingredientInputList.add(Pair(ingredientView, nutriments));
@@ -241,7 +242,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         if (result != null) {
             val kCal100 = result.product.nutriments.energyKcal100g.toString();
             val genericName = result.product.product_name
-            if (!kCal100.isNullOrBlank() && !genericName.isNullOrBlank()) {
+            if (kCal100.isNotBlank() && genericName.isNotBlank()) {
                 addView(result.product.nutriments, genericName)
             }
         } else {
