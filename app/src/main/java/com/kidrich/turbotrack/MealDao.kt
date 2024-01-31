@@ -20,6 +20,9 @@ interface MealDao {
     @Delete
     suspend fun deleteMeal(meal: Meal)
 
+    @Query("DELETE FROM meal WHERE meal.mealId = :mealId")
+    suspend fun deleteMealById(mealId: Long)
+
     @Transaction
     @Query("SELECT * FROM meal")
     fun getMealsWithIngredients(): Flow<List<MealWithIngredients>>

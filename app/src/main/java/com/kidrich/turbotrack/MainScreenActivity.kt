@@ -2,10 +2,7 @@ package com.kidrich.turbotrack
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.kidrich.turbotrack.databinding.ActivityMainscreenBinding
 import java.io.File
 
@@ -29,30 +26,10 @@ class MainScreenActivity: AppCompatActivity() {
         binding = ActivityMainscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val db = MealDatabase.getInstance(applicationContext)
 
-        val viewModelMeal by viewModels<MealViewModel>(
-            factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return MealViewModel(db.mealDao, db.ingredientDao) as T
-                    }
-                }
-            }
-        )
-
-        val viewModelIngredient by viewModels<IngredientViewModel>(
-            factoryProducer = {
-                object : ViewModelProvider.Factory {
-                    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                        return IngredientViewModel(db.ingredientDao) as T
-                    }
-                }
-            }
-        )
 
         // Setting click listeners for the buttons
-        setClickListeners(viewModelMeal, viewModelIngredient)
+        setClickListeners()
 
         val fragment = VerticalBarChartFragment()
         supportFragmentManager.beginTransaction()
@@ -60,8 +37,7 @@ class MainScreenActivity: AppCompatActivity() {
             .commit()
     }
 
-    private fun setClickListeners(viewModelMeal: MealViewModel,
-                                  viewModelIngredient: IngredientViewModel
+    private fun setClickListeners(
     ) {
         binding.addMealButton.setOnClickListener {
             startActivity(Intent(this, AddMealActivity::class.java))

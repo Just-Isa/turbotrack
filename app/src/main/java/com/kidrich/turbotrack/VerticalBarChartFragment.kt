@@ -264,15 +264,15 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     }
 
     private fun onRemoveButtonClicked(meal: Meal, mealViewModel: MealViewModel, view: LinearLayout, component: View) {
-            AlertDialog.Builder(this.activity)
-                .setIcon(com.kidrich.turbotrack.R.drawable.baseline_delete_forever_24)
-                .setTitle("Are you sure you want to delete this Meal?")
-                .setPositiveButton("Alrighty") {_, _ ->
-                    CoroutineScope(Dispatchers.Main).launch {
-                        view.removeView(component)
-                        mealViewModel.onEvent(MealEvent.DeleteMeal(meal))
-                    }
-                }.create().show()
+        AlertDialog.Builder(this.activity)
+            .setIcon(com.kidrich.turbotrack.R.drawable.baseline_delete_forever_24)
+            .setTitle("Are you sure you want to delete this Meal?")
+            .setPositiveButton("Alrighty") {_, _ ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    view.removeView(component)
+                    mealViewModel.onEvent(MealEvent.DeleteMeal(meal))
+                }
+            }.create().show()
     }
 
     override fun onNothingSelected() {

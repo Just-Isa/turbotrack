@@ -8,6 +8,7 @@
     android:orientation="horizontal"
     android:paddingTop="5dp"
     android:paddingBottom="10dp"
+    android:layout_marginBottom="10dp"
     android:background="@drawable/textlines_purple">
 
 
@@ -37,15 +38,15 @@
 
     <TextView
         android:id="@+id/meal_ingredient_detail_salt"
-        android:layout_width="185dp"
+        android:layout_width="100dp"
         android:layout_height="43dp"
+        android:layout_marginStart="3dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_name" />
+        app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_sugar"
+        app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_calories" />
 
     <TextView
         android:id="@+id/meal_ingredient_detail_protein"
@@ -73,14 +74,29 @@
 
     <TextView
         android:id="@+id/meal_ingredient_detail_fat"
-        android:layout_width="185dp"
+        android:layout_width="100dp"
         android:layout_height="43dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:background="@drawable/textlines_right"
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_protein"
+        app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_salt" />
+
+
+    <ImageView
+        android:id="@+id/meal_ingredient_detail_remove_ingredient"
+        android:layout_width="97dp"
+        android:layout_height="43dp"
+        android:layout_gravity="top|center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/baseline_delete_forever_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_fat"/>
 
     <TextView
         android:id="@+id/meal_ingredient_detail_grams"

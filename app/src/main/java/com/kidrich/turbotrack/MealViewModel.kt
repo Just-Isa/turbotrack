@@ -141,7 +141,10 @@ class MealViewModel(
                 ingredientDao.upsertIngredients(ingredients)
             }
 
-            is MealEvent.SaveOneMeal -> {
+            is MealEvent.DeleteMealById -> {
+                viewModelScope.launch {
+                    mealDao.deleteMealById(event.mealId)
+                }
             }
         }
     }

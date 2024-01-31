@@ -2,7 +2,6 @@ package com.kidrich.turbotrack
 
 sealed interface MealEvent {
     object SaveMeal: MealEvent
-    data class SaveOneMeal(val Meal: Meal): MealEvent
     data class InsertMealWithIngredients(val meal: Meal, val ingredients: List<Ingredient>): MealEvent
     data class SetTimestamp(val timestamp: String): MealEvent
     data class SetIsSnack(val isSnack: Boolean): MealEvent
@@ -10,6 +9,8 @@ sealed interface MealEvent {
     object HideDialog: MealEvent
     data class SortType(val sortType: com.kidrich.turbotrack.SortType): MealEvent
     data class DeleteMeal(val meal: Meal): MealEvent
+
+    data class DeleteMealById(val mealId: Long): MealEvent
 }
 
 sealed interface IngredientEvent {
