@@ -1,7 +1,6 @@
 package com.kidrich.turbotrack
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +30,11 @@ class IngredientDetailActivity: AppCompatActivity() {
 
                     ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_name).text = it.name
                     ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_calories).text = it.calories.toString()+"cal"
-                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_grams).text = it.grams.toString()+"g/ml"
+                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_grams).text = it.grams.toString()+"g"
+                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_salt).text = (it.salt100g?.div(100)?.times(it.grams)).toString()+"g Salt"
+                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_fat).text = (it.fat100g?.div(100)?.times(it.grams)).toString()+"g Fat"
+                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_protein).text =(it.proteins100g?.div(100)?.times(it.grams)).toString()+"g Protein"
+                    ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_sugar).text = (it.sugars100g?.div(100)?.times(it.grams)).toString()+"g Sugar"
 
 
                     informationLayout.addView(ingredientDetail)

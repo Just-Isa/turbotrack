@@ -8,19 +8,19 @@
 
 
     <ScrollView
-        android:layout_width="398dp"
-        android:layout_height="587dp"
+        android:layout_width="415dp"
+        android:layout_height="630dp"
         app:layout_constraintBottom_toTopOf="@+id/meal_ingredient_close_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.11">
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/ingreadient_detail_meal_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/ingreadient_detail_meal_layout"/>
+            android:orientation="vertical" />
     </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
