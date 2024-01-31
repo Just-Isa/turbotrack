@@ -71,19 +71,19 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
             val entries: ArrayList<PieEntry> = arrayListOf()
 
 
-            if(totalFat.toFloat() > 1f) {
+            if(totalFat.toFloat() > 0.2f) {
                 entries.add(PieEntry(totalFat.toFloat(), "Fat", ))
             }
 
-            if(totalSugar.toFloat() > 1f) {
+            if(totalSugar.toFloat() > 0.2f) {
                 entries.add(PieEntry(totalSugar.toFloat(), "Sugar"))
             }
 
-            if(totalSalt.toFloat() > 1f) {
+            if(totalSalt.toFloat() > 0.2f) {
                 entries.add(PieEntry(totalSalt.toFloat(), "Salt"))
             }
 
-            if(totalProtein.toFloat() > 1f) {
+            if(totalProtein.toFloat() > 0.2f) {
                 entries.add(PieEntry(totalProtein.toFloat(), "Protein"))
             }
 
@@ -121,7 +121,6 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
-        Log.d("nutrition", e.toString())
         if (e is PieEntry) {
             binding.mealNutritionalInfoSpecificText.text = e.label + " - " + e.value + "g"
         }

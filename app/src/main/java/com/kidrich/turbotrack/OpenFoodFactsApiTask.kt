@@ -1,7 +1,6 @@
 
 import android.annotation.SuppressLint
 import android.os.AsyncTask
-import android.util.Log
 import com.google.gson.Gson
 import com.kidrich.turbotrack.ApiTaskCallback
 import java.io.BufferedReader
@@ -34,7 +33,6 @@ class OpenFoodFactsApiTask(private val callback: ApiTaskCallback) : AsyncTask<St
                 urlConnection.disconnect()
             }
         } catch (e: IOException) {
-            Log.e("OpenFoodFactsApi", "Error during API call", e)
             null
         }
     }

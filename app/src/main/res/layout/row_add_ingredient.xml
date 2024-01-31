@@ -1,60 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_height="wrap_content"
+    android:layout_height="110dp"
     android:layout_width="match_parent"
-    android:orientation="horizontal"
-    android:paddingTop="5dp"
-    android:paddingBottom="10dp"
+    android:orientation="vertical"
     android:background="@drawable/textlines">
 
 
-    <EditText
-        android:id="@+id/meal_ingredient_name"
-        android:layout_width="144dp"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="@string/add_ingredient_name_hint"
-        android:inputType="text"
-        android:textColor="@color/white"
-        android:textColorHint="#363636" />
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/meal_ingredient_calories"
-        android:layout_width="84dp"
+
+        <EditText
+            android:id="@+id/meal_ingredient_name"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:hint="@string/add_ingredient_name_hint"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="#363636" />
+
+
+        <EditText
+            android:id="@+id/meal_ingredient_calories"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="cal"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+
+            android:textColorHint="#363636" />
+
+        <EditText
+            android:id="@+id/meal_ingredient_calories_grams"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="g/ml"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="#363636"
+
+            />
+
+        <ImageView
+            android:id="@+id/meal_ingredient_remove"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_gravity="top|center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="4dp"
+            android:src="@android:drawable/ic_input_delete" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:ems="10"
-        android:hint="kcal/100"
-        android:gravity="center"
-        android:inputType="number"
-        android:textColor="@color/white"
-        android:textColorHint="#363636"
-
-        />
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
 
-    <EditText
-        android:id="@+id/meal_ingredient_calories_grams"
-        android:layout_width="75dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:ems="10"
-        android:hint="g/ml"
-        android:gravity="center"
-        android:inputType="number"
-        android:textColor="@color/white"
-        android:textColorHint="#363636"
+        <EditText
+            android:id="@+id/meal_ingredient_protein"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="protein"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
 
-        />
+            android:textColorHint="#363636" />
 
-    <ImageView
-        android:id="@+id/meal_ingredient_remove"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="4dp"
-        android:src="@android:drawable/ic_input_delete" />
+        <EditText
+            android:id="@+id/meal_ingredient_fat"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="fat"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="#363636"
+
+            />
+
+        <EditText
+            android:id="@+id/meal_ingredient_salt"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="salt"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="#363636"
+
+            />
+
+        <EditText
+            android:id="@+id/meal_ingredient_sugar"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:ems="10"
+            android:gravity="left"
+            android:hint="sugar"
+            android:inputType="numberDecimal"
+            android:textColor="@color/white"
+            android:textColorHint="#363636"
+
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

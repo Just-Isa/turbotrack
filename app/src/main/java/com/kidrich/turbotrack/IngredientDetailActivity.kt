@@ -23,8 +23,6 @@ class IngredientDetailActivity: AppCompatActivity() {
         val receivedList: List<Ingredient>? =
             intent.getParcelableArrayListExtra("ingredients")
 
-        Log.d("testhoden", receivedList.toString())
-
         if (receivedList != null) {
             if (receivedList.isNotEmpty()) {
                 receivedList.forEach {
@@ -35,6 +33,7 @@ class IngredientDetailActivity: AppCompatActivity() {
                     ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_calories).text = it.calories.toString()+"cal"
                     ingredientDetail.findViewById<TextView>(R.id.meal_ingredient_detail_grams).text = it.grams.toString()+"g/ml"
 
+
                     informationLayout.addView(ingredientDetail)
                 }
             } else {
@@ -43,9 +42,6 @@ class IngredientDetailActivity: AppCompatActivity() {
         } else {
             finish()
         }
-
-
-        Log.d("penis", receivedList.toString())
 
         binding.mealIngredientCloseButton.setOnClickListener {
             finish()

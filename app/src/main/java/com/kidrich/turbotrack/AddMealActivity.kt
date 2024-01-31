@@ -9,7 +9,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -56,7 +55,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         binding.mealScanIngredientButton.setOnClickListener {
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                Log.d("cameratest", "Cant open cause no permission!!-")
+                showAlertDialog("No camera permission granted!")
             } else {
                 scanCode()
             }
@@ -78,8 +77,18 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                     val editName: EditText = it.first.findViewById(R.id.meal_ingredient_name)
                     val editCalories: EditText = it.first.findViewById(R.id.meal_ingredient_calories)
                     val editAmount: EditText = it.first.findViewById(R.id.meal_ingredient_calories_grams)
+                    val editSugar: EditText = it.first.findViewById(R.id.meal_ingredient_sugar)
+                    val editProtein: EditText = it.first.findViewById(R.id.meal_ingredient_protein)
+                    val editFat: EditText = it.first.findViewById(R.id.meal_ingredient_fat)
+                    val editSalt: EditText = it.first.findViewById(R.id.meal_ingredient_salt)
 
-                    if (!editName.text.isNullOrBlank() && !editCalories.text.isNullOrBlank() && !editAmount.text.isNullOrBlank()) {
+                    if (!editName.text.isNullOrBlank() &&
+                        !editCalories.text.isNullOrBlank() &&
+                        !editAmount.text.isNullOrBlank() &&
+                        !editFat.text.isNullOrBlank() &&
+                        !editSugar.text.isNullOrBlank() &&
+                        !editProtein.text.isNullOrBlank()
+                        ) {
                         if (it.second != null && it.second!!.energyKcal.toFloat() != 0.0f) {
                             ingredientsToSubmit.add(
                                 Ingredient(
@@ -109,24 +118,24 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                                     energyUnit = it.second?.energyUnit,
                                     energyValue = it.second?.energyValue,
                                     fat = it.second?.fat,
-                                    fat100g = it.second?.fat100g,
+                                    fat100g = editFat.text.toString().toDouble(),
                                     fatServing = it.second?.fatServing,
                                     fatUnit = it.second?.fatUnit,
                                     fatValue = it.second?.fatValue,
                                     proteins = it.second?.proteins,
                                     nutritionScoreFr = it.second?.nutritionScoreFr,
                                     nutritionScoreFr100g = it.second?.nutritionScoreFr,
-                                    proteins100g = it.second?.proteins100g,
+                                    proteins100g = editProtein.text.toString().toDouble(),
                                     proteinsServing = it.second?.proteinsServing,
                                     proteinsUnit = it.second?.proteinsUnit,
                                     proteinsValue = it.second?.proteinsValue,
                                     salt = it.second?.salt,
-                                    salt100g = it.second?.salt,
+                                    salt100g = editSalt.text.toString().toDouble(),
                                     saltServing = it.second?.saltServing,
                                     saltUnit = it.second?.saltUnit,
                                     saltValue = it.second?.saltValue,
                                     sugars = it.second?.sugars,
-                                    sugars100g = it.second?.sugars100g,
+                                    sugars100g = editSugar.text.toString().toDouble(),
                                     sugarsServing = it.second?.sugarsServing,
                                     sugarsUnit = it.second?.sugarsUnit,
                                     sugarsValue = it.second?.sugarsValue
@@ -139,6 +148,10 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                                     calories = ((editCalories.text.toString().toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
                                     mealId = meal.mealId,
                                     grams = Integer.parseInt(editAmount.text.toString()),
+                                    fat100g = editFat.text.toString().toDouble(),
+                                    proteins100g = editProtein.text.toString().toDouble(),
+                                    sugars100g = editSugar.text.toString().toDouble(),
+                                    salt100g = editSalt.text.toString().toDouble()
                                 )
                             )
                         }
@@ -171,7 +184,11 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
     private fun addView(nutriments: Nutriments?, genericName: String?) {
         val ingredientView = layoutInflater.inflate(R.layout.row_add_ingredient, null, false)
         val caloriesPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_calories)
-        Log.d("hoden", nutriments.toString())
+        val sugarPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_sugar)
+        val proteinPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_protein)
+        val fatPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_fat)
+        val saltPerHundred = ingredientView.findViewById<EditText>(R.id.meal_ingredient_salt)
+        var allDataPresent: Boolean = true;
         if (genericName != null) {
             ingredientView.findViewById<EditText>(R.id.meal_ingredient_name).setText(genericName)
         }
@@ -179,9 +196,40 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         if (nutriments != null) {
             if (nutriments.energyKcal100g != 0.0) {
                 caloriesPerHundred.setText(nutriments.energyKcal100g.toString())
+
             } else {
-                showAlertDialog("BarCode did not result in sufficient Data, please fill out.")
+                allDataPresent = false;
             }
+
+            if (nutriments.sugars100g != 0.0) {
+                sugarPerHundred.setText(nutriments.sugars100g.toString())
+            } else {
+                allDataPresent = false;
+            }
+
+            if (nutriments.proteins100g != 0.0) {
+                proteinPerHundred.setText(nutriments.proteins100g.toString())
+            } else {
+                allDataPresent = false;
+            }
+
+            if (nutriments.fat100g != 0.0) {
+                fatPerHundred.setText(nutriments.fat100g.toString())
+            } else {
+                allDataPresent = false;
+            }
+
+            if (nutriments.salt100g != 0.0) {
+                saltPerHundred.setText(nutriments.fat100g.toString())
+            } else {
+                allDataPresent = false;
+            }
+
+            if (!allDataPresent) {
+                showAlertDialog("BarCode data didn't include all the Data, please fill in by hand!")
+            }
+
+
             ingredientInputList.add(Pair(ingredientView, nutriments));
             ingredientView.findViewById<ImageView>(R.id.meal_ingredient_remove).setOnClickListener {
                 removeView(Pair(ingredientView, nutriments))
@@ -251,7 +299,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
     }
 
     override fun onApiTaskError() {
-        Log.e("YourActivity", "API call failed")
+        // todo?
     }
 
 }
