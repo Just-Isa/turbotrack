@@ -72,7 +72,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                 var meal: Meal = Meal(
                     name = this.binding.mealAddMealName.text.toString(),
                     timestamp = getFormattedDay(),
-                    isSnack = this.binding.switchSnack.isActivated
+                    isSnack = this.binding.switchSnack.isChecked
                 )
                 ingredientInputList.forEach {
                     val editName: EditText = it.first.findViewById(R.id.meal_ingredient_name)

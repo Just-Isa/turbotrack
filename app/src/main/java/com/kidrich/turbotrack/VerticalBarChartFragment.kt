@@ -91,10 +91,18 @@ class VerticalBarChartFragment : Fragment() {
         }
 
 
+        val relevantSnacks = mealViewModel.state.value.meals
+            .filter { meals ->
+                formattedDates.contains(meals.meal.timestamp) && meals.meal.isSnack
+            }
+            .groupBy { it.meal.name } // Group meals by name
+            .map { (name, mealsList) -> name to mealsList.size } // Map each group to Pair(name, count)
+            .sortedByDescending { it.second } // Sort by count in descending order
+
         activity.findViewById<LinearLayout>(R.id.fave_snacks_last_meal_container).visibility = View.VISIBLE
 
         val lastMealsScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_last_meals)
-        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.meal_clicked_information_fave_snacks)
+        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_fave_snacks)
 
         lastMealsScrollView.removeAllViews()
         faveSnacksScrollView.removeAllViews()
@@ -109,11 +117,11 @@ class VerticalBarChartFragment : Fragment() {
                 mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
                 mealWithIngredients.ingredients.any { it.sugars100g != 0.0 } )
             {
-                mealDetailButton.setOnClickListener {
-                    onNutritionalInfoButtonClicked(activity, mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories }, mealWithIngredients.meal.name , mealWithIngredients.ingredients)
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
+                    onNutritionalInfoButtonClicked( activity, mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories }, mealWithIngredients.meal.name , mealWithIngredients.ingredients)
                 }
             } else {
-                mealDetailButton.setOnClickListener {
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
                     AlertDialog.Builder(this.activity)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("No Nutritional Data present!")
@@ -123,6 +131,41 @@ class VerticalBarChartFragment : Fragment() {
                 mealDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
             }
             lastMealsScrollView.addView(mealDetailButton)
+        }
+
+        for ((mealName, mealCount) in relevantSnacks) {
+            val snackDetailButton = inflater.inflate(R.layout.row_show_snack_name_and_edit, null, false)
+            snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).text = mealName + " - " + mealCount
+
+            // Assuming mealViewModel.state.value.meals is a list of meals with ingredients
+            val mealWithIngredients = mealViewModel.state.value.meals
+                .find { it.meal.name == mealName && formattedDates.contains(it.meal.timestamp) }
+
+            if (mealWithIngredients != null &&
+                (mealWithIngredients.ingredients.any { it.fat100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.proteins100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.sugars100g != 0.0 })) {
+
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).setOnClickListener {
+                    onNutritionalInfoButtonClicked(
+                        activity,
+                        mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories },
+                        mealWithIngredients.meal.name,
+                        mealWithIngredients.ingredients
+                    )
+                }
+            } else {
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).setOnClickListener {
+                    AlertDialog.Builder(this.activity)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("No Nutritional Data present!")
+                        .setPositiveButton("Alrighty") { _, _ ->
+                        }.create().show()
+                }
+                snackDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+            }
+            faveSnacksScrollView.addView(snackDetailButton)
         }
     }
 
@@ -343,17 +386,29 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
 
     override fun onNothingSelected() {
 
+        if(activity.findViewById<LinearLayout>(R.id.meal_clicked_information).visibility == View.GONE) {
+            return
+        }
         activity.findViewById<LinearLayout>(R.id.meal_clicked_information).visibility = View.GONE
+
 
         val relevantMeals = mealViewModel.state.value.meals.filter { meals ->
             formattedDates.contains(meals.meal.timestamp) && !meals.meal.isSnack
         }
 
+        val relevantSnacks = mealViewModel.state.value.meals
+            .filter { meals ->
+                formattedDates.contains(meals.meal.timestamp) && meals.meal.isSnack
+            }
+            .groupBy { it.meal.name } // Group meals by name
+            .map { (name, mealsList) -> name to mealsList.size } // Map each group to Pair(name, count)
+            .sortedByDescending { it.second } // Sort by count in descending order
+
 
         activity.findViewById<LinearLayout>(R.id.fave_snacks_last_meal_container).visibility = View.VISIBLE
 
         val lastMealsScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_last_meals)
-        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.meal_clicked_information_fave_snacks)
+        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_fave_snacks)
 
         lastMealsScrollView.removeAllViews()
         faveSnacksScrollView.removeAllViews()
@@ -362,26 +417,60 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
             val mealDetailButton = inflater.inflate(R.layout.row_show_meal_name_and_edit, null, false)
             mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).text = mealWithIngredients.meal.name
 
-                if (
-                    mealWithIngredients.ingredients.any { it.fat100g != 0.0 } ||
-                    mealWithIngredients.ingredients.any { it.proteins100g != 0.0 } ||
-                    mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
-                    mealWithIngredients.ingredients.any { it.sugars100g != 0.0 } )
-                {
-                    mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
-                        onNutritionalInfoButtonClicked( mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories }, mealWithIngredients.meal.name , mealWithIngredients.ingredients)
-                    }
-                } else {
-                    mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
-                        AlertDialog.Builder(this.activity)
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .setTitle("No Nutritional Data present!")
-                            .setPositiveButton("Alrighty") {_, _ ->
-                            }.create().show()
-                    }
-                    mealDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+            if (
+                mealWithIngredients.ingredients.any { it.fat100g != 0.0 } ||
+                mealWithIngredients.ingredients.any { it.proteins100g != 0.0 } ||
+                mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
+                mealWithIngredients.ingredients.any { it.sugars100g != 0.0 } )
+            {
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
+                    onNutritionalInfoButtonClicked( mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories }, mealWithIngredients.meal.name , mealWithIngredients.ingredients)
                 }
+            } else {
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).setOnClickListener {
+                    AlertDialog.Builder(this.activity)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("No Nutritional Data present!")
+                        .setPositiveButton("Alrighty") {_, _ ->
+                        }.create().show()
+                }
+                mealDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+            }
             lastMealsScrollView.addView(mealDetailButton)
+        }
+
+        for ((mealName, mealCount) in relevantSnacks) {
+            val snackDetailButton = inflater.inflate(R.layout.row_show_snack_name_and_edit, null, false)
+            snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).text = mealName + " - " + mealCount
+
+            // Assuming mealViewModel.state.value.meals is a list of meals with ingredients
+            val mealWithIngredients = mealViewModel.state.value.meals
+                .find { it.meal.name == mealName && formattedDates.contains(it.meal.timestamp) }
+
+            if (mealWithIngredients != null &&
+                (mealWithIngredients.ingredients.any { it.fat100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.proteins100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
+                        mealWithIngredients.ingredients.any { it.sugars100g != 0.0 })) {
+
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).setOnClickListener {
+                    onNutritionalInfoButtonClicked(
+                        mealWithIngredients.ingredients.sumOf { ingredient -> ingredient.calories },
+                        mealWithIngredients.meal.name,
+                        mealWithIngredients.ingredients
+                    )
+                }
+            } else {
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).setOnClickListener {
+                    AlertDialog.Builder(this.activity)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("No Nutritional Data present!")
+                        .setPositiveButton("Alrighty") { _, _ ->
+                        }.create().show()
+                }
+                snackDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+            }
+            faveSnacksScrollView.addView(snackDetailButton)
         }
     }
 }

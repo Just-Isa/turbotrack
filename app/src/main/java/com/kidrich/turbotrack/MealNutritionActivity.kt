@@ -2,6 +2,8 @@ package com.kidrich.turbotrack
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.Entry
@@ -32,6 +34,7 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
 
         val mealName: String? = intent.getStringExtra("mealName")
         val mealCals: String? = intent.getStringExtra("mealCals")
+        val weekly: Boolean = intent.getBooleanExtra("WEEKLY", false)
 
 
         val pieChart: PieChart = binding.mealNutritionalInfoPiechart
@@ -140,33 +143,50 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         if (e is PieEntry) {
-            when(e.label) {
+            val textView = TextView(this)
+            textView.gravity = Gravity.CENTER
+            textView.textSize = 20f
+
+            binding.mealNutritionalInfoText.removeAllViews()
+            when (e.label) {
                 "Sugar" -> {
-                    binding.mealNutritionalInfoSpecificText.text = e.value.toString() + "g total sugar\n\n"
+                    textView.text = String.format("%.2f", e.value) + "g total sugar\n"
+                    binding.mealNutritionalInfoText.addView(textView)
                     sugarList.forEach {
-                        binding.mealNutritionalInfoSpecificText.text =
-                            binding.mealNutritionalInfoSpecificText.text.toString() + it.first.name + " - " + it.second.toString() + "g\n"
+                        val textViewSugar = TextView(this)
+                        textViewSugar.text =  it.first.name + " - " + String.format("%.2f", it.second) + "g\n"
+                        textViewSugar.textSize = 18f
+                        binding.mealNutritionalInfoText.addView(textViewSugar)
                     }
                 }
                 "Fat" -> {
-                    binding.mealNutritionalInfoSpecificText.text = e.value.toString() + "g total fat\n\n"
+                    textView.text = String.format("%.2f", e.value) + "g total fat\n"
+                    binding.mealNutritionalInfoText.addView(textView)
                     fatList.forEach {
-                        binding.mealNutritionalInfoSpecificText.text =
-                            binding.mealNutritionalInfoSpecificText.text.toString() + it.first.name + " - " + it.second.toString() + "g\n"
+                        val textViewFat = TextView(this)
+                        textViewFat.text = it.first.name + " - " + String.format("%.2f", it.second) + "g\n"
+                        textViewFat.textSize = 18f
+                        binding.mealNutritionalInfoText.addView(textViewFat)
                     }
                 }
                 "Protein" -> {
-                    binding.mealNutritionalInfoSpecificText.text = e.value.toString() + "g total protein\n\n"
+                    textView.text =String.format("%.2f", e.value) + "g total protein\n"
+                    binding.mealNutritionalInfoText.addView(textView)
                     proteinList.forEach {
-                        binding.mealNutritionalInfoSpecificText.text =
-                            binding.mealNutritionalInfoSpecificText.text.toString() + it.first.name + " - " + it.second.toString() + "g\n"
+                        val textViewProtein = TextView(this)
+                        textViewProtein.text = it.first.name + " - " + String.format("%.2f", it.second) + "g\n"
+                        textViewProtein.textSize = 18f
+                        binding.mealNutritionalInfoText.addView(textViewProtein)
                     }
                 }
                 "Salt" -> {
-                    binding.mealNutritionalInfoSpecificText.text = e.value.toString() + "g total salt\n\n"
+                    textView.text =  String.format("%.2f", e.value) + "g total salt\n"
+                    binding.mealNutritionalInfoText.addView(textView)
                     saltList.forEach {
-                        binding.mealNutritionalInfoSpecificText.text =
-                            binding.mealNutritionalInfoSpecificText.text.toString() + it.first.name + " - " + it.second.toString() + "g\n"
+                        val textViewSalt = TextView(this)
+                        textViewSalt.text = it.first.name + " - " + String.format("%.2f", it.second) + "g\n"
+                        textViewSalt.textSize = 18f
+                        binding.mealNutritionalInfoText.addView(textViewSalt)
                     }
                 }
             }
@@ -175,7 +195,7 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
     }
 
     override fun onNothingSelected() {
-        binding.mealNutritionalInfoSpecificText.text = ""
+        binding.mealNutritionalInfoText.removeAllViews()
     }
 
 }

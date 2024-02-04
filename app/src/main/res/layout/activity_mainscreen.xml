@@ -42,13 +42,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.192"
-        android:background="@drawable/border" />
+        android:background="@drawable/textlines_top_bottom" />
 
 
     <ScrollView
         android:id="@+id/scrollView4"
-        android:layout_width="410dp"
-        android:layout_height="203dp"
+        android:layout_width="411dp"
+        android:layout_height="290dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -68,14 +68,11 @@
     <LinearLayout
         android:id="@+id/fave_snacks_last_meal_container"
         android:layout_width="412dp"
-        android:layout_height="220dp"
+        android:layout_height="311dp"
         android:gravity="center"
-        android:background="@drawable/textlines_top_bottom"
-        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
-        app:layout_constraintVertical_bias="0.26">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container">
 
         <LinearLayout
             android:layout_width="206dp"
@@ -85,7 +82,7 @@
 
             <TextView
                 android:id="@+id/text_fave_snacks"
-                android:layout_width="150dp"
+                android:layout_width="185dp"
                 android:layout_height="47dp"
                 android:layout_marginStart="8dp"
                 android:gravity="center"
@@ -98,7 +95,7 @@
 
             <ScrollView
                 android:layout_width="184dp"
-                android:layout_height="155dp"
+                android:layout_height="220dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/textlines_top_right_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -135,7 +132,7 @@
 
             <ScrollView
                 android:layout_width="192dp"
-                android:layout_height="155dp"
+                android:layout_height="220dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/textlines_top_left_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -144,7 +141,7 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <LinearLayout
-                    android:id="@+id/meal_clicked_information_fave_snacks"
+                    android:id="@+id/scroll_view_fave_snacks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" />
@@ -154,19 +151,20 @@
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/appCompatButton"
+        android:id="@+id/weekly_nutrition_button"
         android:layout_width="396dp"
         android:layout_height="61dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/add_ingredient_button"
         android:text="@string/weekly_nutrition"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView4"
-        app:layout_constraintVertical_bias="0.516" />
+        app:layout_constraintVertical_bias="0.708" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

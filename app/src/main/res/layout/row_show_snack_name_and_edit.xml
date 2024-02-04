@@ -14,13 +14,13 @@
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/last_meals_meal_name"
+            android:id="@+id/fave_snacks_meal_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/add_ingredient_button"
-            android:drawableEnd="@drawable/baseline_zoom_in_24"
+            android:drawableStart="@drawable/baseline_zoom_in_24"
             android:ellipsize="end"
-            android:gravity="left|center"
+            android:gravity="right|center"
             android:inputType="text"
             android:paddingStart="10dp"
             android:clickable="true"

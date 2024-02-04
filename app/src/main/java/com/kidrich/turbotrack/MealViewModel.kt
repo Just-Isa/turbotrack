@@ -1,6 +1,5 @@
 package com.kidrich.turbotrack
 
-import android.util.Log.d
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -85,7 +84,6 @@ class MealViewModel(
 
                 // UPSERT INGREDIENTS
                 val mealId: Long = mealDao.upsertMeal(newMeal)
-                d("MealViewModel", event.ingredients.toString())
                 val ingredients: ArrayList<Ingredient> = arrayListOf()
                 event.ingredients.forEach { ingredient: Ingredient ->
                     ingredients.add(Ingredient(

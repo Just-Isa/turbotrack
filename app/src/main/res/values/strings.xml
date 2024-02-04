@@ -4,7 +4,7 @@
     <string name="add_ingredient_calories_hint">Calories</string>
     <string name="add_meal_title">Meal Name</string>
     <string name="meal_ingredient_detail_button_title">Ingredients</string>
-    <string name="fave_snacks">Fave Snacks</string>
+    <string name="fave_snacks">Weekly Snacks</string>
     <string name="weekly_nutrition">Weekly Nutrition</string>
     <string name="last_meals">Weeks Meals</string>
     <string name="meal">Meal</string>
