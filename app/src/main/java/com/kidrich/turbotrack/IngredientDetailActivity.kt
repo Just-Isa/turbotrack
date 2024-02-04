@@ -26,7 +26,7 @@ class IngredientDetailActivity: AppCompatActivity() {
         setContentView(binding.root)
 
 
-        informationLayout = this.findViewById<LinearLayout>(R.id.ingreadient_detail_meal_layout)
+        informationLayout = this.findViewById<LinearLayout>(R.id.ingredient_detail_meal_layout)
         informationLayout.removeAllViews()
 
         val receivedList: List<Ingredient>? =

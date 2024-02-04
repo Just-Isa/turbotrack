@@ -19,7 +19,7 @@
         android:background="@drawable/textlines_right_bottom"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,7 +31,7 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:background="@drawable/textlines"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/meal_ingredient_detail_grams"
         app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_name"
         app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +44,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_sugar"
         app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_calories" />
 
@@ -55,7 +55,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_sugar" />
 
@@ -66,7 +66,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_name"
@@ -81,7 +81,7 @@
         android:gravity="center"
         android:background="@drawable/textlines_right"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_protein"
         app:layout_constraintTop_toBottomOf="@+id/meal_ingredient_detail_salt" />
@@ -107,7 +107,7 @@
         android:ems="10"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/meal_ingredient_detail_calories"
         app:layout_constraintTop_toTopOf="parent" />

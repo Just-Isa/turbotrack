@@ -18,7 +18,7 @@
             android:layout_width="150dp"
             android:layout_height="30dp"
             android:ellipsize="end"
-            android:gravity="left|center"
+            android:gravity="start|center"
             android:hint="@string/add_ingredient_name_hint"
             android:inputType="text"
             android:textColor="@color/white"

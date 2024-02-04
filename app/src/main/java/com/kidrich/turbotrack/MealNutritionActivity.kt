@@ -82,12 +82,12 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
             }
 
             pieChart.setUsePercentValues(true);
-            pieChart.getDescription().setEnabled(false);
+            pieChart.description.isEnabled = false;
             pieChart.setExtraOffsets(5f, 10f, 5f, 5f);
-            pieChart.setDragDecelerationFrictionCoef(0.95f);
-            pieChart.setDrawHoleEnabled(true);
+            pieChart.dragDecelerationFrictionCoef = 0.95f;
+            pieChart.isDrawHoleEnabled = true;
             pieChart.setHoleColor(Color.WHITE);
-            pieChart.setTransparentCircleRadius(61f);
+            pieChart.transparentCircleRadius = 61f;
 
             val entries: ArrayList<PieEntry> = arrayListOf()
 

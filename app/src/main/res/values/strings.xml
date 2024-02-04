@@ -4,4 +4,19 @@
     <string name="add_ingredient_calories_hint">Calories</string>
     <string name="add_meal_title">Meal Name</string>
     <string name="meal_ingredient_detail_button_title">Ingredients</string>
+    <string name="fave_snacks">Fave Snacks</string>
+    <string name="weekly_nutrition">Weekly Nutrition</string>
+    <string name="last_meals">Last Meals</string>
+    <string name="meal">Meal</string>
+    <string name="scan">scan</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="go_back">Go Back</string>
+    <string name="add_meal">Add Meal</string>
+    <string name="snack">Snack</string>
+    <string name="cal">cal</string>
+    <string name="g_ml">g/ml</string>
+    <string name="protein">protein</string>
+    <string name="fat">fat</string>
+    <string name="salt">salt</string>
+    <string name="sugar">sugar</string>
 </resources>

@@ -4,20 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kidrich.turbotrack.databinding.ActivityMainscreenBinding
-import java.io.File
 
 class MainScreenActivity: AppCompatActivity() {
-
-
-
-    private val REQUEST_CAMERA_PERMISSION = 1001;
-    private val REQUEST_IMAGE_CAPTURE = 1
-
-    private val MAX_X_VALUE = 7
-    private val SET_LABEL = "Daily Calories"
-
-    private var photoFile: File? = null
-
 
     private lateinit var binding: ActivityMainscreenBinding
 

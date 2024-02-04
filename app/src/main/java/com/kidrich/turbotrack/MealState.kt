@@ -7,11 +7,7 @@ data class MealState (
     val isSnack: Boolean = false,
     val isAddingMeal: Boolean = false,
     val sortType: SortType = SortType.ALL,
-) {
-    fun getTotalCalories(): Int {
-        return meals.sumOf { it.ingredients.sumOf { it.calories } }
-    }
-}
+)
 
 data class IngredientState(
     val ingredients: List<Ingredient> = emptyList(),
