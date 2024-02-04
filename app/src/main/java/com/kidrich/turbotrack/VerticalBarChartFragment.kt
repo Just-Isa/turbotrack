@@ -145,7 +145,6 @@ class VerticalBarChartFragment : Fragment() {
         dataSets.add(set1)
         val data: BarData = BarData(dataSets)
 
-        // Give chart dataset
         data.setValueTextSize(12f)
         data.setValueTextColor(ColorTemplate.rgb("#ffffff"))
         chart?.legend?.isEnabled = true
@@ -181,6 +180,7 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     private lateinit var inflater: LayoutInflater
     private lateinit var mealViewModel: MealViewModel
 
+
     constructor(
         mealsMappedToDays: ArrayList<Pair<String,MealWithIngredients>>,
         activity: MainScreenActivity,
@@ -193,10 +193,16 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
         this.activity = activity
         this.inflater = inflater
         this.mealViewModel = mealViewModel
+
     }
     override fun onValueSelected(e: Entry?, h: Highlight?) {
         val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
         informationLayout.removeAllViews()
+        informationLayout.visibility = View.VISIBLE
+
+        activity.findViewById<LinearLayout>(R.id.fave_snacks_last_meal_container).visibility = View.GONE
+
+
         mealsMappedToDays.filter { mealsMappedToDays -> mealsMappedToDays.first == formattedDates[e?.x?.toInt()!!]}.forEach { pair ->
 
 
@@ -276,8 +282,33 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
     }
 
     override fun onNothingSelected() {
-        val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
-        informationLayout.removeAllViews()
+
+        activity.findViewById<LinearLayout>(R.id.meal_clicked_information).visibility = View.GONE
+
+        val relevantMeals = mealViewModel.state.value.meals.filter { meals ->
+            formattedDates.contains(meals.meal.timestamp) && !meals.meal.isSnack
+        }
+
+
+        activity.findViewById<LinearLayout>(R.id.fave_snacks_last_meal_container).visibility = View.VISIBLE
+
+        val lastMealsScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_last_meals)
+        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.meal_clicked_information_fave_snacks)
+
+        lastMealsScrollView.removeAllViews()
+        faveSnacksScrollView.removeAllViews()
+
+        for (mealWithIngredients in relevantMeals) {
+            val textView = inflater.inflate(R.layout.row_show_meal_name_and_edit, null, false)
+            textView.findViewById<AppCompatTextView>(R.id.last_meals_meal_name).text = mealWithIngredients.meal.name
+
+            textView.setOnClickListener {
+
+            }
+
+            lastMealsScrollView.addView(textView)
+        }
     }
+
 
 }

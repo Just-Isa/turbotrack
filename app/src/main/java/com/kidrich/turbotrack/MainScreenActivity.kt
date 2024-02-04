@@ -26,9 +26,6 @@ class MainScreenActivity: AppCompatActivity() {
         binding = ActivityMainscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
-        // Setting click listeners for the buttons
         setClickListeners()
 
         val fragment = VerticalBarChartFragment()

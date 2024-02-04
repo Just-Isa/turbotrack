@@ -39,7 +39,6 @@ class OpenFoodFactsApiTask(private val callback: ApiTaskCallback) : AsyncTask<St
 
     @Deprecated("Deprecated in Java")
     override fun onPostExecute(result: String?) {
-        // Process the result here
         if (result != null) {
             val gson: Gson = Gson()
             val data = gson.fromJson(result, ProductResponse::class.java)

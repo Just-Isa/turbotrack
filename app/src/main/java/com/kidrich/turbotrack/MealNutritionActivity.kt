@@ -81,7 +81,6 @@ class MealNutritionActivity: AppCompatActivity(), OnChartValueSelectedListener {
                 it.second
             }
 
-            // Customize the chart appearance
             pieChart.setUsePercentValues(true);
             pieChart.getDescription().setEnabled(false);
             pieChart.setExtraOffsets(5f, 10f, 5f, 5f);

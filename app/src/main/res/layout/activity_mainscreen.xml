@@ -55,19 +55,129 @@
         app:layout_constraintVertical_bias="0.192"
         android:background="@drawable/border" />
 
+
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="368dp"
+        android:id="@+id/scrollView4"
+        android:layout_width="410dp"
+        android:layout_height="203dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:layout_constraintVertical_bias="0.148">
 
         <LinearLayout
             android:id="@+id/meal_clicked_information"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
+
     </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/fave_snacks_last_meal_container"
+        android:layout_width="412dp"
+        android:layout_height="186dp"
+        android:gravity="center"
+
+        app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:layout_constraintVertical_bias="0.26">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="70dp">
+
+            <TextView
+                android:id="@+id/text_fave_snacks"
+                android:layout_width="150dp"
+                android:layout_height="47dp"
+                android:layout_marginStart="8dp"
+                android:gravity="center"
+                android:text="Last Meals"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ScrollView
+                android:layout_width="150dp"
+                android:layout_height="155dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/textlines_top_right_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_fave_snacks"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:id="@+id/scroll_view_last_meals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+
+            </ScrollView>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="154dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_last_meals"
+                android:layout_width="150dp"
+                android:layout_height="47dp"
+                android:gravity="center"
+                android:text="Fave Snacks"
+                android:textColor="@color/white"
+                android:textSize="25dp"
+                app:layout_constraintStart_toEndOf="@+id/text_fave_snacks"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ScrollView
+                android:layout_width="150dp"
+                android:layout_height="155dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/textlines_top_left_bottom"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_last_meals"
+                app:layout_constraintVertical_bias="0.0">
+
+                <LinearLayout
+                    android:id="@+id/meal_clicked_information_fave_snacks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical" />
+
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/appCompatButton"
+        android:layout_width="396dp"
+        android:layout_height="61dp"
+        android:background="@drawable/add_ingredient_button"
+        android:text="Weekly Nutrition"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView4"
+        app:layout_constraintVertical_bias="0.516" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

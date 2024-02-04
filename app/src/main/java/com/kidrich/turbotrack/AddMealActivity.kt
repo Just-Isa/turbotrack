@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -90,10 +91,14 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                         !editProtein.text.isNullOrBlank()
                         ) {
                         if (it.second != null && it.second!!.energyKcal.toFloat() != 0.0f) {
+                            var calories = ((it.second!!.energyKcal.toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt()
+                            if (calories < 1) {
+                                calories = 1
+                            }
                             ingredientsToSubmit.add(
                                 Ingredient(
                                     name = editName.text.toString(),
-                                    calories = ((it.second!!.energyKcal.toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
+                                    calories = calories,
                                     mealId = meal.mealId,
                                     grams = Integer.parseInt(editAmount.text.toString()),
                                     alcohol = it.second?.alcohol,
@@ -142,10 +147,14 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
                                 )
                             )
                         } else {
+                            var calories = ((editCalories.text.toString().toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt()
+                            if (calories < 1) {
+                                calories = 1
+                            }
                             ingredientsToSubmit.add(
                                 Ingredient(
                                     name = editName.text.toString(),
-                                    calories = ((editCalories.text.toString().toFloat() / 100) * (editAmount.text.toString().toFloat())).toInt(),
+                                    calories = calories,
                                     mealId = meal.mealId,
                                     grams = Integer.parseInt(editAmount.text.toString()),
                                     fat100g = editFat.text.toString().toDouble(),
@@ -256,7 +265,6 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setTitle(text)
             .setPositiveButton("Alrighty") {_, _ ->
-                //pass
             }.create().show()
     }
 
@@ -299,7 +307,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
     }
 
     override fun onApiTaskError() {
-        // todo?
+        Log.e("api","Error on API")
     }
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="2000dp"
+    android:orientation="vertical"
+    android:background="@drawable/textlines">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/last_meals_meal_name"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:ellipsize="end"
+            android:gravity="left|center"
+            android:hint="@string/add_ingredient_name_hint"
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="#363636" />
+
+    </LinearLayout>
+
+</LinearLayout>
