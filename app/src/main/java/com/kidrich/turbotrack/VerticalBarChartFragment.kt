@@ -128,7 +128,7 @@ class VerticalBarChartFragment : Fragment() {
                         .setPositiveButton("Alrighty") {_, _ ->
                         }.create().show()
                 }
-                mealDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+                mealDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
             }
             lastMealsScrollView.addView(mealDetailButton)
         }
@@ -141,7 +141,7 @@ class VerticalBarChartFragment : Fragment() {
             val mealWithIngredients = mealViewModel.state.value.meals
                 .find { it.meal.name == mealName && formattedDates.contains(it.meal.timestamp) }
 
-            if (mealWithIngredients != null &&
+            if (mealWithIngredients != null && mealWithIngredients.ingredients.any {it.calories > 1} &&
                 (mealWithIngredients.ingredients.any { it.fat100g != 0.0 } ||
                         mealWithIngredients.ingredients.any { it.proteins100g != 0.0 } ||
                         mealWithIngredients.ingredients.any { it.salt100g != 0.0 } ||
@@ -163,7 +163,7 @@ class VerticalBarChartFragment : Fragment() {
                         .setPositiveButton("Alrighty") { _, _ ->
                         }.create().show()
                 }
-                snackDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_left)
             }
             faveSnacksScrollView.addView(snackDetailButton)
         }
@@ -434,7 +434,7 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                         .setPositiveButton("Alrighty") {_, _ ->
                         }.create().show()
                 }
-                mealDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+                mealDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
             }
             lastMealsScrollView.addView(mealDetailButton)
         }
@@ -468,7 +468,7 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                         .setPositiveButton("Alrighty") { _, _ ->
                         }.create().show()
                 }
-                snackDetailButton.setBackgroundColor(ColorTemplate.rgb("#363636"))
+                snackDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_left)
             }
             faveSnacksScrollView.addView(snackDetailButton)
         }
