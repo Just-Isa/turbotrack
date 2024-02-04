@@ -44,6 +44,7 @@ class VerticalBarChartFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -70,6 +71,34 @@ class VerticalBarChartFragment : Fragment() {
             prepareChartData(viewModelMeal, activity, inflater)
         }
         return view
+    }
+
+    private fun prepareGeneralData(activity: MainScreenActivity, mealViewModel: MealViewModel, formattedDates: List<String>, inflater: LayoutInflater) {
+        activity.findViewById<LinearLayout>(R.id.meal_clicked_information).visibility = View.GONE
+
+        val relevantMeals = mealViewModel.state.value.meals.filter { meals ->
+            formattedDates.contains(meals.meal.timestamp) && !meals.meal.isSnack
+        }
+
+
+        activity.findViewById<LinearLayout>(R.id.fave_snacks_last_meal_container).visibility = View.VISIBLE
+
+        val lastMealsScrollView = activity.findViewById<LinearLayout>(R.id.scroll_view_last_meals)
+        val faveSnacksScrollView = activity.findViewById<LinearLayout>(R.id.meal_clicked_information_fave_snacks)
+
+        lastMealsScrollView.removeAllViews()
+        faveSnacksScrollView.removeAllViews()
+
+        for (mealWithIngredients in relevantMeals) {
+            val textView = inflater.inflate(R.layout.row_show_meal_name_and_edit, null, false)
+            textView.findViewById<AppCompatTextView>(R.id.last_meals_meal_name).text = mealWithIngredients.meal.name
+
+            textView.setOnClickListener {
+
+            }
+
+            lastMealsScrollView.addView(textView)
+        }
     }
 
     private fun configureChartAppearance() {
@@ -133,6 +162,8 @@ class VerticalBarChartFragment : Fragment() {
                         mealsMappedToDays, activity, formattedDates, inflater, viewModelMeal))
                 }
                 updateChart(values)
+
+                prepareGeneralData(activity, viewModelMeal, formattedDates, inflater)
             }
         }
     }
@@ -309,6 +340,4 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
             lastMealsScrollView.addView(textView)
         }
     }
-
-
 }

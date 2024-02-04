@@ -16,6 +16,7 @@ class MainScreenActivity: AppCompatActivity() {
 
         setClickListeners()
 
+
         val fragment = VerticalBarChartFragment()
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
