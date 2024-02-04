@@ -68,7 +68,7 @@
     <LinearLayout
         android:id="@+id/fave_snacks_last_meal_container"
         android:layout_width="412dp"
-        android:layout_height="186dp"
+        android:layout_height="220dp"
         android:gravity="center"
         android:background="@drawable/textlines_top_bottom"
         app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
@@ -78,10 +78,9 @@
         app:layout_constraintVertical_bias="0.26">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingEnd="70dp"
             tools:ignore="RtlSymmetry">
 
             <TextView
@@ -98,7 +97,7 @@
 
 
             <ScrollView
-                android:layout_width="150dp"
+                android:layout_width="184dp"
                 android:layout_height="155dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/textlines_top_right_bottom"
@@ -119,13 +118,13 @@
 
 
         <LinearLayout
-            android:layout_width="154dp"
+            android:layout_width="206dp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_last_meals"
-                android:layout_width="150dp"
+                android:layout_width="184dp"
                 android:layout_height="47dp"
                 android:gravity="center"
                 android:text="@string/fave_snacks"
@@ -135,7 +134,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ScrollView
-                android:layout_width="150dp"
+                android:layout_width="192dp"
                 android:layout_height="155dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/textlines_top_left_bottom"

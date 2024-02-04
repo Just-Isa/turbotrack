@@ -2,27 +2,30 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
-    android:layout_width="2000dp"
-    android:orientation="vertical"
-    android:background="@drawable/textlines">
+    android:layout_width="match_parent"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal">
 
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/last_meals_meal_name"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/add_ingredient_button"
+            android:drawableEnd="@drawable/baseline_zoom_in_24"
             android:ellipsize="end"
-            android:gravity="start|center"
-            android:hint="@string/add_ingredient_name_hint"
+            android:gravity="left|center"
             android:inputType="text"
+            android:paddingStart="10dp"
+            android:clickable="true"
+            android:paddingEnd="10dp"
             android:textColor="@color/white"
-            android:textColorHint="#363636" />
+            android:focusable="true" />
 
     </LinearLayout>
 
