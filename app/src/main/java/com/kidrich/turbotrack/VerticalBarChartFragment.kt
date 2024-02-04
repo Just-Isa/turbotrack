@@ -227,6 +227,10 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
 
     }
     override fun onValueSelected(e: Entry?, h: Highlight?) {
+        if ( e == null || e.y.toDouble() == 0.0 ) {
+            onNothingSelected()
+            return
+        }
         val informationLayout = activity.findViewById<LinearLayout>(R.id.meal_clicked_information)
         informationLayout.removeAllViews()
         informationLayout.visibility = View.VISIBLE
