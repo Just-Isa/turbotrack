@@ -14,8 +14,9 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/meal_barchat_name"
-            android:layout_width="159dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="start"
             android:textAlignment="gravity"
             android:textColor="@color/white"
@@ -23,8 +24,10 @@
 
         <TextView
             android:id="@+id/meal_barchat_calories"
-            android:layout_width="140dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="13dp"
             android:gravity="end"
             android:textAlignment="gravity"
             android:textColor="@color/white" />
@@ -40,38 +43,42 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/meal_ingredient_detail"
-            android:layout_width="117dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
-            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/add_ingredient_button"
             android:drawableStart="@drawable/baseline_zoom_in_24"
-            android:paddingStart="47dp"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/meal_nutritional_info"
-            android:layout_width="117dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
-            android:layout_marginEnd="15dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
             android:background="@drawable/add_ingredient_button"
             android:drawableStart="@drawable/baseline_bar_chart_24"
-            android:paddingStart="47dp"
+            android:paddingStart="10dp"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/meal_ingredient_detail_remove"
-            android:layout_width="117dp"
-            android:layout_height="44dp"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
             android:background="@drawable/add_ingredient_button"
             android:drawableStart="@drawable/baseline_delete_forever_24"
-            android:paddingStart="47dp"
+            android:paddingStart="10dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="25sp"
+            android:textSize="18sp"
             tools:ignore="RtlSymmetry" />
     </LinearLayout>
 </LinearLayout>

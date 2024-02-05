@@ -35,9 +35,11 @@
         app:layout_constraintVertical_bias="0.314" />
 
     <ScrollView
-        android:layout_width="363dp"
-        android:layout_height="113dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/meal_nutrition_close_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/meal_nutritional_info_piechart">
@@ -62,8 +64,9 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/meal_nutrition_close_button"
-        android:layout_width="189dp"
+        android:layout_width="0dp"
         android:layout_height="55dp"
+        android:layout_marginEnd="200dp"
         android:background="@drawable/add_snack_button"
         android:drawableEnd="@android:drawable/ic_input_delete"
         android:gravity="center"

@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -56,7 +57,7 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         binding.mealScanIngredientButton.setOnClickListener {
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                showAlertDialog("No camera permission granted!")
+                ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_IMAGE)
             } else {
                 scanCode()
             }
@@ -186,6 +187,22 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
 
         binding.mealIngredientCloseButton.setOnClickListener {
             finish();
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == this.REQUEST_CODE_IMAGE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                this.scanCode()
+            } else {
+                showAlertDialog("You need Camera Permissions to scan barcodes!" +
+                        "")
+            }
         }
     }
 

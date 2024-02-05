@@ -7,18 +7,18 @@
     android:background="@color/black"
     android:backgroundTint="@color/black">
 
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_meal_button"
-
-        android:layout_width="121dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="200dp"
         android:background="@drawable/add_meal_button"
-        android:drawableLeft="@android:drawable/ic_input_add"
-        android:gravity="right|center"
-        android:paddingLeft="5dp"
-        android:paddingRight="25dp"
+        android:drawableStart="@android:drawable/ic_input_add"
+        android:gravity="center"
+        android:paddingStart="5dp"
+        android:paddingEnd="25dp"
         android:shadowColor="#A8A8A8"
         android:shadowDx="0"
         android:shadowDy="0"
@@ -29,32 +29,32 @@
         android:textColorLink="#000000"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="RtlHardcoded" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/fragment_container"
-        android:layout_width="439dp"
-        android:layout_height="217dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/textlines_top_bottom"
+        app:layout_constraintDimensionRatio="16:9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="spread"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.192"
-        android:background="@drawable/textlines_top_bottom" />
-
+        app:layout_constraintTop_toBottomOf="@+id/add_meal_button" />
 
     <ScrollView
         android:id="@+id/scrollView4"
-        android:layout_width="411dp"
-        android:layout_height="290dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toTopOf="@+id/weekly_nutrition_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
-        app:layout_constraintVertical_bias="0.148">
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container">
 
         <LinearLayout
             android:id="@+id/meal_clicked_information"
@@ -67,22 +67,26 @@
 
     <LinearLayout
         android:id="@+id/fave_snacks_last_meal_container"
-        android:layout_width="412dp"
-        android:layout_height="311dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container">
 
         <LinearLayout
-            android:layout_width="206dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="20dp"
             android:orientation="vertical"
             tools:ignore="RtlSymmetry">
 
             <TextView
                 android:id="@+id/text_fave_snacks"
-                android:layout_width="185dp"
+                android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:layout_marginStart="8dp"
                 android:gravity="center"
@@ -94,14 +98,14 @@
 
 
             <ScrollView
-                android:layout_width="184dp"
-                android:layout_height="220dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginStart="8dp"
                 android:background="@drawable/textlines_top_right_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_fave_snacks"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintTop_toBottomOf="@+id/text_fave_snacks">
 
                 <LinearLayout
                     android:id="@+id/scroll_view_last_meals"
@@ -113,15 +117,16 @@
             </ScrollView>
         </LinearLayout>
 
-
         <LinearLayout
-            android:layout_width="206dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_last_meals"
-                android:layout_width="184dp"
+                android:layout_width="match_parent"
                 android:layout_height="47dp"
                 android:gravity="center"
                 android:text="@string/fave_snacks"
@@ -131,14 +136,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ScrollView
-                android:layout_width="192dp"
-                android:layout_height="220dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/textlines_top_left_bottom"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_last_meals"
-                app:layout_constraintVertical_bias="0.0">
+                app:layout_constraintStart_toEndOf="@+id/text_last_meals"
+                app:layout_constraintTop_toBottomOf="@+id/text_last_meals">
 
                 <LinearLayout
                     android:id="@+id/scroll_view_fave_snacks"
@@ -152,19 +157,19 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/weekly_nutrition_button"
-        android:layout_width="396dp"
+        android:layout_width="0dp"
         android:layout_height="61dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/add_ingredient_button"
         android:text="@string/weekly_nutrition"
         android:textColor="@color/white"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView4"
-        app:layout_constraintVertical_bias="0.708" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
