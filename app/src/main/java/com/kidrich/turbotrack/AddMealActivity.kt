@@ -69,6 +69,8 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
 
             if (binding.mealAddMealName.text.isNullOrBlank()) {
                 this.showAlertDialog("Please enter a Name for the Meal")
+            } else if (ingredientInputList.size == 0) {
+                this.showAlertDialog("You need to add at least one ingredient")
             } else {
                 var meal: Meal = Meal(
                     name = this.binding.mealAddMealName.text.toString(),

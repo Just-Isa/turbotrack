@@ -128,7 +128,7 @@ class VerticalBarChartFragment : Fragment() {
                         .setPositiveButton("Alrighty") {_, _ ->
                         }.create().show()
                 }
-                mealDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
             }
             lastMealsScrollView.addView(mealDetailButton)
         }
@@ -434,7 +434,7 @@ private class BarChartOnChartValueSelectedListener : OnChartValueSelectedListene
                         .setPositiveButton("Alrighty") {_, _ ->
                         }.create().show()
                 }
-                mealDetailButton.findViewById<AppCompatButton>(R.id.fave_snacks_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
+                mealDetailButton.findViewById<AppCompatButton>(R.id.last_meals_meal_name).background = activity.resources.getDrawable(R.drawable.add_ingredient_button_greyed_out_right)
             }
             lastMealsScrollView.addView(mealDetailButton)
         }
