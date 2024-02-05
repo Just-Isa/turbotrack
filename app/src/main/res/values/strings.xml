@@ -21,4 +21,6 @@
     <string name="fat">fat</string>
     <string name="salt">salt</string>
     <string name="sugar">sugar</string>
+    <string name="flashlight">Flashlight</string>
+    <string name="volume_buttons_control_flash">Volume buttons control flash</string>
 </resources>

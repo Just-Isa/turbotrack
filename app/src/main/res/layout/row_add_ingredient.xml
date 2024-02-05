@@ -15,7 +15,7 @@
 
         <EditText
             android:id="@+id/meal_ingredient_name"
-            android:layout_width="144dp"
+            android:layout_width="112dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:ems="10"
@@ -27,7 +27,7 @@
 
         <EditText
             android:id="@+id/meal_ingredient_calories"
-            android:layout_width="0dp"
+            android:layout_width="76dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_weight="1"

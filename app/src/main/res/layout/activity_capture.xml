@@ -1,0 +1,25 @@
+<!-- custom_capture_layout.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ZXing scanner view -->
+
+    <!-- Flashlight button -->
+
+    <com.journeyapps.barcodescanner.DecoratedBarcodeView
+        android:id="@+id/zxing_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/volume_buttons_control_flash"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/white"
+            android:textSize="20dp"/>
+    </com.journeyapps.barcodescanner.DecoratedBarcodeView>
+
+</FrameLayout>
