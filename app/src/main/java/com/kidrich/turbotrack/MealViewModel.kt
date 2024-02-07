@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MealViewModel(
@@ -21,22 +20,23 @@ class MealViewModel(
     private val _meals = _sortType
         .flatMapLatest { sortType ->
             when (sortType) {
-                SortType.ALL -> mealDao.getMealsWithIngredients()
+                SortType.ALL ->
+                    mealDao.getMealsWithIngredients()
                 SortType.SNACK -> mealDao.getMealsWithIngredients()
                 SortType.MEAL -> mealDao.getMealsWithIngredients()
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-
-
     private val _state = MutableStateFlow(MealState())
-    val state = combine(_state, _sortType, _meals ) { state, sortType, meals  ->
+    val state = combine(_state, _sortType, _meals )
+    { state, sortType, meals  ->
         state.copy(
             meals = meals,
             sortType = sortType,
         )
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), MealState());
+    }.stateIn(viewModelScope,
+        SharingStarted.WhileSubscribed(5000),
+        MealState());
 
 
     suspend fun onEvent(event: MealEvent) {
@@ -45,29 +45,6 @@ class MealViewModel(
                 viewModelScope.launch {
                     mealDao.deleteMeal(event.meal)
                 }
-            }
-            MealEvent.HideDialog -> {
-                _state.update { it.copy(
-                    isAddingMeal = false
-                ) }
-            }
-            MealEvent.SaveMeal -> {
-                // TODO: Maybe implement later depending on need
-            }
-            is MealEvent.SetTimestamp-> {
-                _state.update { it.copy(
-                    timestamp = event.timestamp
-                ) }
-            }
-            is MealEvent.SetIsSnack -> {
-                _state.update { it.copy(
-                    isSnack = event.isSnack
-                ) }
-            }
-            MealEvent.ShowDialog -> {
-                _state.update { it.copy(
-                    isAddingMeal = true
-                ) }
             }
             is MealEvent.SortType -> {
                 _sortType.value = event.sortType

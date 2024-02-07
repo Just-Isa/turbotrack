@@ -5,7 +5,6 @@ data class MealState (
     val dayId: Long = 0,
     val timestamp : String = "",
     val isSnack: Boolean = false,
-    val isAddingMeal: Boolean = false,
     val sortType: SortType = SortType.ALL,
 )
 

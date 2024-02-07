@@ -9,7 +9,9 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 @SuppressLint("NewApi")
-class OpenFoodFactsApiTask(private val callback: ApiTaskCallback) : AsyncTask<String, Void, String>() {
+class OpenFoodFactsApiTask(
+    private val callback: ApiTaskCallback
+) : AsyncTask<String, Void, String>() {
 
     override fun doInBackground(vararg params: String): String? {
         val barcode = params[0]
@@ -41,7 +43,9 @@ class OpenFoodFactsApiTask(private val callback: ApiTaskCallback) : AsyncTask<St
     override fun onPostExecute(result: String?) {
         if (result != null) {
             val gson: Gson = Gson()
-            val data = gson.fromJson(result, ProductResponse::class.java)
+            val data = gson.fromJson(
+                result,
+                ProductResponse::class.java)
             callback.onApiTaskComplete(data)
         } else {
             callback.onApiTaskError()

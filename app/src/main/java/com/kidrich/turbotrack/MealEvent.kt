@@ -1,12 +1,7 @@
 package com.kidrich.turbotrack
 
 sealed interface MealEvent {
-    object SaveMeal: MealEvent
     data class InsertMealWithIngredients(val meal: Meal, val ingredients: List<Ingredient>): MealEvent
-    data class SetTimestamp(val timestamp: String): MealEvent
-    data class SetIsSnack(val isSnack: Boolean): MealEvent
-    object ShowDialog: MealEvent
-    object HideDialog: MealEvent
     data class SortType(val sortType: com.kidrich.turbotrack.SortType): MealEvent
     data class DeleteMeal(val meal: Meal): MealEvent
 

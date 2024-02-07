@@ -56,8 +56,11 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
 
         binding.mealScanIngredientButton.setOnClickListener {
 
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,  arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_IMAGE)
+            if (ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                    arrayOf(Manifest.permission.CAMERA),
+                    REQUEST_CODE_IMAGE)
             } else {
                 scanCode()
             }
@@ -197,13 +200,18 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        super.onRequestPermissionsResult(
+            requestCode,
+            permissions,
+            grantResults)
         if (requestCode == this.REQUEST_CODE_IMAGE) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            if (grantResults[0]
+                    == PackageManager.PERMISSION_GRANTED) {
                 this.scanCode()
             } else {
-                showAlertDialog("You need Camera Permissions to scan barcodes!" +
-                        "")
+                showAlertDialog(
+                    "You need Camera Permissions to " +
+                            "scan barcodes!")
             }
         }
     }
@@ -291,15 +299,22 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         return SimpleDateFormat("yyyy-MM-dd").format(Date());
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(
+        requestCode: Int,
+        resultCode: Int,
+        data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        var result: IntentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
+        var result: IntentResult =
+            IntentIntegrator.parseActivityResult(
+                requestCode,
+                resultCode,
+                data)
         if (result != null) {
             if (result.contents != null) {
                 val apiTask = OpenFoodFactsApiTask(this)
                 apiTask.execute(result.contents)
             } else {
-                showAlertDialog("No qr code found!")
+                showAlertDialog("No BarCode code found!")
             }
         }
     }
@@ -313,7 +328,8 @@ class AddMealActivity: AppCompatActivity(), ApiTaskCallback {
         integrator.initiateScan()
     }
 
-    override fun onApiTaskComplete(result: ProductResponse?) {
+    override fun onApiTaskComplete(
+        result: ProductResponse?) {
         if (result != null) {
             val kCal100 = result.product.nutriments.energyKcal100g.toString();
             val genericName = result.product.product_name
